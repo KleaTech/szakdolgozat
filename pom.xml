@@ -15,6 +15,7 @@
         <module>hu.kleatech.jigsaw.controller</module>
         <module>hu.kleatech.jigsaw.service</module>
         <module>hu.kleatech.jigsaw.model</module>
+        <module>hu.kleatech.jigsaw.utils</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -30,6 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jdk.version>1.9</jdk.version>
+        <start-class>hu.kleatech.jigsaw.MainApplication</start-class>
     </properties>
 
     <dependencies>
@@ -70,6 +72,20 @@
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <configuration>
+                                <classifier>exec</classifier>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

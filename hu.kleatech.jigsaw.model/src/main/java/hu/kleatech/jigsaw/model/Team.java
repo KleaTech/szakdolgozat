@@ -1,10 +1,12 @@
 package hu.kleatech.jigsaw.model;
 
+import static hu.kleatech.jigsaw.util.StringUtils.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Entity
 public class Team implements Serializable {
@@ -20,7 +22,7 @@ public class Team implements Serializable {
     @OneToMany(mappedBy = "team")
     private List<Participant> participants;
 
-    @OneToMany(mappedBy = "team")
+    @Transient
     private List<Round> rounds;
 
     @Column
@@ -32,13 +34,16 @@ public class Team implements Serializable {
     private Long id;
 
     protected Team(){} //For serialization only
-    public Team(List<Event> events, List<Competition> competitions, String name, List<Participant> participants, List<Round> rounds, Properties infos) {
-        this.events = events;
-        this.competitions = competitions;
+    public Team(String name, Properties infos) {
         this.name = name;
-        this.participants = participants;
-        this.rounds = rounds;
         this.infos = infos;
+    }
+
+    @PostLoad
+    private void onLoad(){
+        this.rounds = getParticipants().stream().map(p -> p.getRounds()).flatMap(r -> r.stream()).collect(Collectors.toList());
+        this.competitions = getRounds().stream().map(r -> r.getCompetition()).collect(Collectors.toList());
+        this.events = getCompetitions().stream().map(c -> c.getEvent()).collect(Collectors.toList());
     }
 
     public List<Event> getEvents() { return events; }
@@ -59,7 +64,9 @@ public class Team implements Serializable {
     @Override
     public int hashCode() { return Objects.hash(id); }
     @Override
-    public String toString() { return "Team{" + "events=" + events.size() + ", competitions=" + competitions.size() + ", name='" + name + '\'' + ", participants=" + participants + ", rounds=" + rounds.size() + ", infos=" + infos.size() + '}'; }
+    public String toString() {
+        return concat("", "Team{", "events=", nullsafe(()->events.size()), ", competitions=", nullsafe(()->competitions.size()), ", name='", name, '\'', ", participants=", nullsafe(()->participants), ", rounds=", nullsafe(()->rounds.size()), ", infos=", getInfos(), '}');
+    }
 
     public void overwrite(Team newTeam) {
         this.competitions = newTeam.competitions;

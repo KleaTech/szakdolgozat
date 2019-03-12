@@ -23,3 +23,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/hu.kleatech.jigsaw.model/target/
+/hu.kleatech.jigsaw.persistence/target/
+/hu.kleatech.jigsaw.api/target/
+/hu.kleatech.jigsaw.controller/target/
+/hu.kleatech.jigsaw.utils/target/

@@ -1,25 +1,29 @@
 package hu.kleatech.jigsaw.model;
 
+import static hu.kleatech.jigsaw.util.StringUtils.*;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.function.Function;
 
 @Entity
 public class Round {
-    @Column
     @ManyToOne
     @JoinColumn(name = "rounds")
-    private Team team;
+    private Participant participant;
 
     @ManyToOne
-    @JoinColumn(name = "rounds")
+    @JoinColumn(name = "rounds_competition")
     private Competition competition;
 
-    @Column
+    @Column(name = "values_")
     @Lob
-    private List<Double> values = new ArrayList<>(3);
+    private ArrayList<Double> values = new ArrayList<>(3);
 
     @Column
     @Lob
@@ -30,16 +34,15 @@ public class Round {
     private Long id;
 
     protected Round(){} //For serialization only
-    public Round(Team team, Competition competition, List<Double> values, Properties infos) {
-        this.team = team;
-        this.competition = competition;
-        this.values = values;
+    public Round(Participant participant, Competition competition, Properties infos) {
+        this.participant = participant;
         this.infos = infos;
+        this.competition = competition;
     }
 
-    public Team getTeam() { return team; }
+    public Participant getParticipant() { return participant; }
     public Competition getCompetition() { return competition; }
-    public List<Double> getValues() { return values; }
+    public List<Double> getValues() {return Collections.unmodifiableList(values); }
     public Properties getInfos() { return infos==null?new Properties():infos; }
     public Long getId() { return id; }
 
@@ -54,12 +57,39 @@ public class Round {
     public int hashCode() { return Objects.hash(id); }
     @Override
     public String toString() {
-        return "Round{" + "team=" + team + ", competition=" + competition.getName() + ", values=" + values + ", infos=" + infos.size() + '}'; }
+        return concat("", "Round{", "team=", nullsafe(()->participant), ", competition=", nullsafe(()->competition.getName()), ", values=", values, ", infos=", getInfos());
+    }
 
     public void overwrite(Round newRound) {
         this.competition = newRound.competition;
         this.infos = newRound.infos;
-        this.team = newRound.team;
+        this.participant = newRound.participant;
         this.values = newRound.values;
+    }
+
+    public Round add(Double... value) {
+        values.addAll(Arrays.asList(value));
+        return this;
+    }
+    public Round add(Collection<Double> values) {
+        this.values.addAll(values);
+        return this;
+    }
+
+    public double modify(int index, double newval) throws IndexOutOfBoundsException {
+        return values.set(index, newval);
+    }
+
+    public List<Double> preresults(Function<List<Double>, List<Double>> logic) {
+        return logic.apply(values);
+    }
+
+    //From values, not from preresults
+    public Double result(Function<List<Double>, Double> logic) {
+        return logic.apply(values);
+    }
+
+    public static List<Round> order(List<Round> rounds, Function<List<Round>, List<Round>> ordering) {
+        return ordering.apply(rounds);
     }
 }

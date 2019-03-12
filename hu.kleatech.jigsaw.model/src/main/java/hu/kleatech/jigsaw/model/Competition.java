@@ -1,10 +1,12 @@
 package hu.kleatech.jigsaw.model;
 
+import static hu.kleatech.jigsaw.util.StringUtils.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Entity
 public class Competition implements Serializable {
@@ -16,11 +18,15 @@ public class Competition implements Serializable {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
+    @Column(name = "rounds_competition")
     private List<Round> rounds;
 
     @Transient
     private List<Team> teams;
+
+    @Column
+    private String template;
 
     @Column
     @Lob
@@ -31,18 +37,23 @@ public class Competition implements Serializable {
     private Long id;
 
     protected Competition(){} //For serialization only
-    public Competition(Event event, String name, List<Round> rounds, List<Team> teams, Properties infos) {
+    public Competition(Event event, String name, String template, Properties infos) {
         this.event = event;
         this.name = name;
-        this.rounds = rounds;
-        this.teams = teams;
         this.infos = infos;
+        this.template = template;
+    }
+
+    @PostLoad
+    private void onLoad(){
+        this.teams = getRounds().stream().map(r -> r.getParticipant().getTeam()).collect(Collectors.toList());
     }
 
     public Event getEvent() { return event; }
     public String getName() { return name; }
     public List<Round> getRounds() { return rounds; }
-    public List<Team> getTeams() { return teams; }
+    public List<Team> getTeams() { if(teams==null) onLoad(); return teams; }
+    public String getTemplate() { return template; }
     public Properties getInfos() { return infos==null?new Properties():infos; }
     public Long getId() { return id; }
 
@@ -56,7 +67,9 @@ public class Competition implements Serializable {
     @Override
     public int hashCode() { return Objects.hash(id); }
     @Override
-    public String toString() { return "Competition{" + "event=" + event.getName() + ", name='" + name + '\'' + ", rounds=" + rounds.size() + ", teams=" + teams.size() + ", infos=" + infos.size() + '}'; }
+    public String toString() {
+        return concat("", "Competition{", "event=", nullsafe(()->event.getName()), ", name='", name, '\'', ", rounds=", nullsafe(()->rounds.size()), ", teams=", nullsafe(()->teams.size()), ", infos=" + getInfos(), '}');
+    }
 
     public void overwrite(Competition newCompetition) {
         this.event = newCompetition.event;
@@ -64,5 +77,6 @@ public class Competition implements Serializable {
         this.name = newCompetition.name;
         this.rounds = newCompetition.rounds;
         this.teams = newCompetition.teams;
+        this.template = newCompetition.template;
     }
 }
