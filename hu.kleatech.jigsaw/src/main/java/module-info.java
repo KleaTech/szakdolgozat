@@ -7,6 +7,7 @@ module hu.kleatech.jigsaw {
     opens hu.kleatech.jigsaw to spring.core;
 
     requires hu.kleatech.jigsaw.controller;
+    requires hu.kleatech.jigsaw.service;
     requires spring.beans;
     requires spring.data.jpa;
     requires hibernate.core;
@@ -14,4 +15,7 @@ module hu.kleatech.jigsaw {
     requires spring.core;
     requires spring.jdbc;
     requires spring.orm;
+    requires thymeleaf;
+    requires thymeleaf.extras.java8time;
+    requires thymeleaf.spring;
 }
