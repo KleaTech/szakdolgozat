@@ -8,6 +8,7 @@ import hu.kleatech.jigsaw.service.interfaces.*;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 
@@ -17,21 +18,22 @@ import org.springframework.context.event.EventListener;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
 
 @SpringBootApplication
 @Configuration
 public class MainApplication implements ApplicationRunner {
-
+    
     @Autowired SpringTemplateEngine templateEngine;
     @EventListener(ApplicationStartedEvent.class)
     public void setModuleTemplateResolver() {
         FileTemplateResolver fileTemplateResolver = new FileTemplateResolver();
-        fileTemplateResolver.setPrefix(Paths.get(System.getProperty("user.dir"))
+        fileTemplateResolver.setPrefix(USER_DIR
                 .resolve("modules")
                 .resolve("loadedTemplates")
                 .toString() + File.separator);
         System.out.println(fileTemplateResolver.getPrefix());
-        if (!Files.exists(Paths.get(System.getProperty("user.dir"))
+        if (!Files.exists(USER_DIR
                 .resolve("modules")
                 .resolve("loadedTemplates")
                 .resolve("eventGroupFragment_generated.html")))

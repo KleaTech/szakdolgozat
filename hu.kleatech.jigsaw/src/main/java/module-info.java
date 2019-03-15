@@ -18,4 +18,5 @@ module hu.kleatech.jigsaw {
     requires thymeleaf;
     requires thymeleaf.extras.java8time;
     requires thymeleaf.spring;
+    requires hu.kleatech.jigsaw.utils;
 }

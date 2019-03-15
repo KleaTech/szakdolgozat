@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="../../favicon.ico"/>-->
+
+    <title>Navbar Template for Bootstrap</title>
+
+    <style>
+        .revert {
+            all: revert;
+        }
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing:border-box;
+            -moz-box-sizing: border-box;
+        }
+    </style>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script>
+        function retrieveEventGroup() {
+            var url = '/getEventGroupFragment/' + $('#eventGroupSelector').val();
+            $("#eventSelectorPlaceholder").load(url);
+            console.log("loaded");
+        }
+        function retrieveEvent() {
+            var url = '/getEventFragment/' + $('#eventSelector').val();
+            $("#resultsPlaceholder").load(url);
+            console.log("loaded");
+        }
+        function retrieveCompetition(id) {
+            var url = '/getCompetitionFragment/' + id;
+            $("#competitionPlaceholder").load(url);
+            console.log("loaded");
+        }
+        function send(id, json, placeholderId) {
+            $.ajax({
+                url: "/addRound/" + id,
+                type: 'POST',
+                data: JSON.stringify(json),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                dataType: "json",
+                success: function(data, textStatus, xhr){
+                    $("#" + placeholderId).innerHTML = data;
+                },
+                error: function(data, textStatus, xhr){
+                    alert(data.responseText);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Static navbar -->
+    <div th:replace="fragments :: header"></div>
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="container" th:with="eventGroups=${eventGroups}">
+        <div class="row">
+            <div class="col-xs-12 col-lg-6">
+                <h2>Event Group</h2>
+                <div class="input-group">
+                    <select id="eventGroupSelector" class="form-control">
+                        <th:block th:each="eventGroup : ${eventGroups}">
+                            <option th:value="${eventGroup.id}" th:text="${eventGroup.name}"></option>
+                        </th:block>
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" onclick="retrieveEventGroup();">Select</button>
+                    </span>
+                </div>
+            </div>
+            <div id="eventSelectorPlaceholder" class="col-xs-12 col-lg-6"></div>
+        </div>
+        <hr/>
+        <div id="resultsPlaceholder"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="competitionPlaceholder"></div>
+            </div>
+        </div>
+    </div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<!--<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

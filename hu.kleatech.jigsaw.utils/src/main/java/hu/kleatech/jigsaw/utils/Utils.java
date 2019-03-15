@@ -1,5 +1,6 @@
 package hu.kleatech.jigsaw.utils;
 
+import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -15,7 +16,7 @@ public final class Utils {
     }
 
     public static Path relativePath(String... pieces) {
-        Path path = Paths.get(System.getProperty("user.dir"));
+        Path path = USER_DIR;
         for (String piece : pieces) path = path.resolve(piece);
         return path;
     }
