@@ -1,8 +1,21 @@
 package hu.kleatech.jigsaw.utils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.util.*;
 
 public class Constants {
-    public static final Path USER_DIR = Paths.get(System.getProperty("user.dir")).getParent();
+	public static final String MODULES_DIR_NAME = "modules";
+    public static final Path USER_DIR;
+	
+	static {
+		Path path = Paths.get(System.getProperty("user.dir"));
+		final List<Path> checkedPaths = new LinkedList<>();
+		do {
+			checkedPaths.add(path);
+			if (Files.exists(path.resolve(MODULES_DIR_NAME))) break;
+			path = path.getParent();
+		} while (path != null);
+		if (path == null) throw new IllegalStateException("Cannot find root directory! Checked dirs: " + checkedPaths.toString());
+		USER_DIR = path;
+	}
 }
