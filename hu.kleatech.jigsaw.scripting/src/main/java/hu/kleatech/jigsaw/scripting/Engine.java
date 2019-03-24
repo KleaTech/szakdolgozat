@@ -47,6 +47,18 @@ public class Engine {
             throw new MyScriptException(e);
         }
     }
+    
+    public Function<List<Double>, Double> result(String filename) throws FileNotFoundException, MyScriptException, ClassCastException {
+        try {
+            ScriptEngine engine = resolveEngine(filename);
+            engine.eval(resolveReader(filename));
+            Invocable inv = (Invocable) engine;
+            return inv.getInterface(Function.class);
+        }
+        catch (ScriptException e) {
+            throw new MyScriptException(e);
+        }
+    }
 
     /*public void testPutAndGet() {
         ScriptEngineManager manager = new ScriptEngineManager();

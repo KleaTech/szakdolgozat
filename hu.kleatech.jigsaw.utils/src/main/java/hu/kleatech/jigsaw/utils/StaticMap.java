@@ -148,11 +148,15 @@ public class StaticMap<T> {
         this.twentieth = twentieth;
     }
 
-    public List<T> getAll() { return Stream.of(
+    public List<T> getAll() { 
+        return stream().collect(Collectors.toList());
+    }
+        
+    public Stream<T> stream() { 
+        return Stream.of(
             first, second, third, forth, fifth, sixth, seventh, eighth, ninth, tenth,
             eleventh, twelfth, thirteenth, fourteenth, fifteenth,
             sixteenth, seventeenth, eighteenth, nineteenth, twentieth)
-            .filter(Objects::nonNull).collect(Collectors.toList()); }
-
-    public Stream<T> stream() { return getAll().stream(); }
+            .filter(Objects::nonNull);
+    }
 }

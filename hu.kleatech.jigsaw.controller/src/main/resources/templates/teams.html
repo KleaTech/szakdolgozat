@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css"/>
+
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <div th:fragment="fragment">
+            <div class="container">
+                <div class="row">
+                    <div th:each="team : ${teams}" class="col card" style="margin: 20px; min-width: 500px">
+                        <div class="card-body">
+                            <h1 class="card-title" th:text="${team.name}"></h1>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" th:each="participant : ${team.participants}">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item" th:switch="${participant.sex}">
+                                            <img style="width: 1rem; height: 1rem" th:src="@{/img/male.png}" th:case="${T(hu.kleatech.jigsaw.model.Sex).MALE}"/>
+                                            <img style="width: 1rem; height: 1rem" th:src="@{/img/female.png}" th:case="${T(hu.kleatech.jigsaw.model.Sex).FEMALE}"/>
+                                            <img style="width: 1rem; height: 1rem" th:src="@{/img/none.png}" th:case="${T(hu.kleatech.jigsaw.model.Sex).NOT_GIVEN}"/>
+                                        </li>
+                                        <li class="list-inline-item" th:text="${participant.name}"></li>
+                                        <li class="list-inline-item" th:text="'(' + ${utils.birthDateToAge(participant.birthDate)} + ')'"></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,4 +1,4 @@
-package hu.kleatech.jigsaw.util;
+package hu.kleatech.jigsaw.utils;
 
 import java.util.Arrays;
 import java.util.Objects;

@@ -1,6 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Title</title>
 </head>
@@ -20,7 +19,7 @@
                 <td th:text="${round.values.get(0)}"></td>
                 <td th:text="${round.values.get(1)}"></td>
                 <td th:text="${round.values.get(2)}"></td>
-                <td>
+                <td th:text="${round.result(func)}">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#roundModalAddOther">Edit</button>
                 </td>
             </tr>

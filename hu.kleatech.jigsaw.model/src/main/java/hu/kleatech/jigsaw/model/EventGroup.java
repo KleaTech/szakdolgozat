@@ -1,6 +1,6 @@
 package hu.kleatech.jigsaw.model;
 
-import static hu.kleatech.jigsaw.util.StringUtils.*;
+import static hu.kleatech.jigsaw.utils.StringUtils.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
