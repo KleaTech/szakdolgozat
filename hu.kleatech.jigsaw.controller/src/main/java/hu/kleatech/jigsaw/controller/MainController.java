@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
-import hu.kleatech.jigsaw.scripting.Engine;
+import hu.kleatech.jigsaw.api.Dispatcher;
+import hu.kleatech.jigsaw.api.EngineProvider;
 import static hu.kleatech.jigsaw.utils.Utils.*;
 import java.util.*;
 import static hu.kleatech.jigsaw.controller.ControllerUtils.*;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 @Controller
 @Transactional
@@ -23,7 +25,13 @@ public class MainController {
     @Autowired CompetitionService competitionService;
     @Autowired ParticipantService participantService;
     @Autowired TeamService teamService;
+    EngineProvider engineProvider;
 
+    @org.springframework.context.event.EventListener(ApplicationReadyEvent.class)
+    public void load() {
+        engineProvider = Dispatcher.getEngineProvider();
+    }
+    
     @RequestMapping("/")
     public String index(Model model, Locale locale) {
         model.addAttribute("username", "Béla");
@@ -77,8 +85,8 @@ public class MainController {
         Competition compSelected = competitionService.get(Long.parseLong(compId));
         model.addAttribute("compSelected", compSelected);
         model.addAttribute("pojo", new StaticMap<String>());
-        model.addAttribute("prefunc", TryOrNull(() -> new Engine(scriptPath(compSelected)).preresults(scriptName(compSelected, ResultType.PRERESULT))));
-        model.addAttribute("func", TryOrNull(() -> new Engine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
+        model.addAttribute("prefunc", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).preresults(scriptName(compSelected, ResultType.PRERESULT))));
+        model.addAttribute("func", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
         return compSelected.getTemplate() + " :: fragment";
     }
     @PostMapping("/addRound/{id}")

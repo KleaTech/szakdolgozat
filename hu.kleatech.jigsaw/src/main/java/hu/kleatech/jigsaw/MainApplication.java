@@ -19,6 +19,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
+import hu.kleatech.jigsaw.scripting.EngineProvider;
 
 @SpringBootApplication
 @Configuration
@@ -26,7 +27,12 @@ public class MainApplication implements ApplicationRunner {
     
     @Autowired SpringTemplateEngine templateEngine;
     @EventListener(ApplicationStartedEvent.class)
-    public void setModuleTemplateResolver() {
+    public void load() {
+        EngineProvider.load();
+        setModuleTemplateResolver();
+    }
+    
+    private void setModuleTemplateResolver() {
         FileTemplateResolver fileTemplateResolver = new FileTemplateResolver();
         fileTemplateResolver.setPrefix(USER_DIR
                 .resolve("modules")

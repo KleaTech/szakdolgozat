@@ -1,10 +1,15 @@
 module hu.kleatech.jigsaw.service {
+    
     requires spring.context;
+    requires spring.beans;
+    requires spring.boot;
+    exports hu.kleatech.jigsaw.service to spring.core;
+    opens hu.kleatech.jigsaw.service to spring.core;
+    opens hu.kleatech.jigsaw.service.interfaces to spring.core;
+    
     requires hu.kleatech.jigsaw.persistence;
     requires hu.kleatech.jigsaw.utils;
-    requires spring.beans;
+    requires hu.kleatech.jigsaw.api;
+    
     exports hu.kleatech.jigsaw.service.interfaces;
-    opens hu.kleatech.jigsaw.service to spring.core;
-    exports hu.kleatech.jigsaw.service to spring.core;
-    opens hu.kleatech.jigsaw.service.interfaces to spring.core;
 }

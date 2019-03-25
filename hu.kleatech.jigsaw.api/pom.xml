@@ -13,10 +13,8 @@
     <dependencies>
         <dependency>
             <groupId>hu.kleatech.jigsaw</groupId>
-            <artifactId>hu.kleatech.jigsaw.persistence</artifactId>
+            <artifactId>hu.kleatech.jigsaw.utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
-
 </project>
