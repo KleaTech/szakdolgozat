@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JIGSAW</ID>
+  <OriginalElement>hu.kleatech.jigsaw.persistence</OriginalElement>
+  <nodes>
+    <node x="1325.3198327850878" y="-23.0">java.transaction.xa</node>
+    <node x="1437.2898359179198" y="124.0">spring.web</node>
+    <node x="800.8384143953633" y="-65.0">thymeleaf.spring5</node>
+    <node x="1168.684572760025" y="519.0">hu.kleatech.jigsaw.utils</node>
+    <node x="1011.0427631578948" y="1.0">hu.kleatech.jigsaw</node>
+    <node x="1007.8384143953633" y="-216.0">spring.jdbc</node>
+    <node x="1147.9388804041353" y="224.0">hu.kleatech.jigsaw.service</node>
+    <node x="745.25" y="203.0">java.base</node>
+    <node x="1447.3138804041353" y="348.0">spring.tx</node>
+    <node x="1001.1888804041353" y="222.0">spring.boot</node>
+    <node x="1449.1888804041353" y="213.0">spring.beans</node>
+    <node x="1430.798940711153" y="414.0">java.persistence</node>
+    <node x="1444.4155701754385" y="289.0">spring.data.jpa</node>
+    <node x="891.5427631578948" y="-151.0">hibernate.core</node>
+    <node x="1378.3198327850878" y="-72.0">java.logging</node>
+    <node x="1066.4155701754385" y="-182.0">spring.core</node>
+    <node x="1153.798940711153" y="415.0">hu.kleatech.jigsaw.model</node>
+    <node x="633.0" y="202.0">java.scripting</node>
+    <node x="960.5427631578948" y="-184.0">spring.orm</node>
+    <node x="1125.5427631578948" y="136.0">hu.kleatech.jigsaw.controller</node>
+    <node x="1245.9375" y="-66.0">java.sql</node>
+    <node x="848.5427631578948" y="-112.0">thymeleaf</node>
+    <node x="645.0" y="141.0">hu.kleatech.jigsaw.scripting</node>
+    <node x="1353.3198327850878" y="-114.0">java.xml</node>
+    <node x="802.5" y="-17.0">thymeleaf.extras.java8time</node>
+    <node x="1104.5" y="-146.0">spring.boot.autoconfigure</node>
+    <node x="1138.1888804041353" y="327.0">hu.kleatech.jigsaw.persistence</node>
+    <node x="665.5" y="418.0">hu.kleatech.jigsaw.api</node>
+    <node x="852.3585134711778" y="337.0">spring.context</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.logging" target="java.sql">
+      <point x="0.0" y="-15.0" />
+      <point x="1288.8198327850878" y="-45.0" />
+      <point x="1285.4375" y="-51.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="spring.context" target="hu.kleatech.jigsaw.controller">
+      <point x="13.375" y="-15.0" />
+      <point x="939.233513471178" y="244.0" />
+      <point x="987.4388804041353" y="198.0" />
+      <point x="1195.4388804041353" y="142.0" />
+      <point x="1195.8999060150377" y="141.0" />
+      <point x="-26.14285714285711" y="15.0" />
+    </edge>
+    <edge source="java.transaction.xa" target="java.sql">
+      <point x="0.0" y="-15.0" />
+      <point x="1272.8198327850878" y="-52.0" />
+      <point x="1268.7708333333333" y="-47.0" />
+      <point x="-23.666666666666742" y="15.0" />
+    </edge>
+    <edge source="spring.beans" target="hu.kleatech.jigsaw.service">
+      <point x="-33.0" y="-15.0" />
+      <point x="1487.6888804041353" y="232.0" />
+      <point x="1293.9388804041353" y="241.0" />
+      <point x="42.0" y="15.0" />
+    </edge>
+    <edge source="java.xml" target="java.sql">
+      <point x="0.0" y="-15.0" />
+      <point x="1287.8198327850878" y="-51.0" />
+      <point x="1295.1041666666667" y="-45.0" />
+      <point x="23.666666666666742" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.api" target="hu.kleatech.jigsaw">
+      <point x="-18.5" y="-15.0" />
+      <point x="770.0" y="425.0" />
+      <point x="810.0" y="259.0" />
+      <point x="858.0" y="197.0" />
+      <point x="983.5953947368421" y="76.0" />
+      <point x="-33.947368421052715" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.persistence" target="hu.kleatech.jigsaw.service">
+      <point x="0.0" y="-15.0" />
+      <point x="1234.6888804041353" y="344.0" />
+      <point x="1232.9388804041353" y="240.0" />
+      <point x="14.0" y="15.0" />
+    </edge>
+    <edge source="spring.core" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1098.9155701754385" y="-161.0" />
+      <point x="1099.858552631579" y="19.0" />
+      <point x="54.31578947368416" y="15.0" />
+    </edge>
+    <edge source="java.scripting" target="hu.kleatech.jigsaw.scripting">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="java.sql" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1132.4375" y="12.0" />
+      <point x="1066.1743421052631" y="14.0" />
+      <point x="-20.368421052631675" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.service" target="hu.kleatech.jigsaw">
+      <point x="-42.0" y="-15.0" />
+      <point x="1162.9388804041353" y="237.0" />
+      <point x="1126.4345727600248" y="212.0" />
+      <point x="1098.4345727600248" y="125.0" />
+      <point x="1078.9638157894738" y="68.0" />
+      <point x="-13.57894736842104" y="15.0" />
+    </edge>
+    <edge source="thymeleaf" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="955.0427631578948" y="-81.0" />
+      <point x="989.7532894736844" y="-54.0" />
+      <point x="-6.789473684210407" y="15.0" />
+    </edge>
+    <edge source="spring.jdbc" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1055.3384143953633" y="-129.0" />
+      <point x="1089.279605263158" y="16.0" />
+      <point x="40.73684210526312" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.api" target="hu.kleatech.jigsaw.scripting">
+      <point x="-55.5" y="-15.0" />
+      <point x="743.0" y="425.0" />
+      <point x="741.3333333333333" y="161.0" />
+      <point x="59.33333333333326" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.utils" target="hu.kleatech.jigsaw.model">
+      <point x="57.75" y="-15.0" />
+      <point x="1239.434572760025" y="541.0" />
+      <point x="1235.298940711153" y="436.0" />
+      <point x="-41.5" y="15.0" />
+    </edge>
+    <edge source="spring.beans" target="hu.kleatech.jigsaw">
+      <point x="33.0" y="-15.0" />
+      <point x="1528.6888804041353" y="225.0" />
+      <point x="1540.548940711153" y="174.0" />
+      <point x="1536.548940711153" y="118.0" />
+      <point x="1125.9111842105265" y="30.0" />
+      <point x="20.368421052631675" y="15.0" />
+    </edge>
+    <edge source="java.base" target="hu.kleatech.jigsaw.scripting">
+      <point x="0.0" y="-15.0" />
+      <point x="755.25" y="163.0" />
+      <point x="754.6666666666667" y="161.0" />
+      <point x="-59.33333333333326" y="15.0" />
+    </edge>
+    <edge source="spring.orm" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1037.5427631578948" y="-108.0" />
+      <point x="1054.1217105263158" y="-63.0" />
+      <point x="13.57894736842104" y="15.0" />
+    </edge>
+    <edge source="thymeleaf.spring5" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="971.3384143953633" y="-41.0" />
+      <point x="1035.4901315789473" y="15.0" />
+      <point x="33.94736842105249" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.model" target="hu.kleatech.jigsaw">
+      <point x="55.33333333333337" y="-15.0" />
+      <point x="1364.1322740444862" y="365.0" />
+      <point x="1364.3384143953633" y="227.0" />
+      <point x="1317.3384143953633" y="105.0" />
+      <point x="1091.0690789473686" y="28.0" />
+      <point x="47.526315789473756" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.utils" target="hu.kleatech.jigsaw.api">
+      <point x="-19.25" y="-15.0" />
+      <point x="1184.434572760025" y="543.0" />
+      <point x="805.5" y="438.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="spring.beans" target="hu.kleatech.jigsaw.controller">
+      <point x="0.0" y="-15.0" />
+      <point x="1446.6888804041353" y="218.0" />
+      <point x="1316.185620300752" y="183.0" />
+      <point x="26.142857142857224" y="15.0" />
+    </edge>
+    <edge source="spring.tx" target="hu.kleatech.jigsaw.persistence">
+      <point x="0.0" y="-15.0" />
+      <point x="-23.875" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.utils" target="hu.kleatech.jigsaw">
+      <point x="-57.75" y="-15.0" />
+      <point x="1305.934572760025" y="540.0" />
+      <point x="1401.0" y="304.0" />
+      <point x="1340.0" y="97.0" />
+      <point x="1099.4375" y="27.0" />
+      <point x="-61.1052631578948" y="15.0" />
+    </edge>
+    <edge source="spring.boot" target="hu.kleatech.jigsaw">
+      <point x="30.999999999999943" y="-15.0" />
+      <point x="1061.6888804041353" y="233.0" />
+      <point x="1055.3384143953633" y="120.0" />
+      <point x="1054.3384143953633" y="23.0" />
+      <point x="1037.7006578947369" y="16.0" />
+      <point x="27.15789473684208" y="15.0" />
+    </edge>
+    <edge source="spring.data.jpa" target="hu.kleatech.jigsaw.persistence">
+      <point x="-27.5" y="-15.0" />
+      <point x="1460.9155701754385" y="304.0" />
+      <point x="1284.3138804041353" y="347.0" />
+      <point x="71.625" y="15.0" />
+    </edge>
+    <edge source="spring.context" target="hu.kleatech.jigsaw.service">
+      <point x="-13.375" y="-15.0" />
+      <point x="931.483513471178" y="367.0" />
+      <point x="944.7513804041353" y="351.0" />
+      <point x="1039.7513804041353" y="320.0" />
+      <point x="1084.9388804041353" y="307.0" />
+      <point x="-14.0" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.utils" target="hu.kleatech.jigsaw.service">
+      <point x="19.25" y="-15.0" />
+      <point x="1181.934572760025" y="545.0" />
+      <point x="1116.0" y="457.0" />
+      <point x="1108.0" y="385.0" />
+      <point x="1125.9388804041353" y="314.0" />
+      <point x="-42.0" y="15.0" />
+    </edge>
+    <edge source="spring.context" target="hu.kleatech.jigsaw">
+      <point x="-40.125" y="-15.0" />
+      <point x="903.7335134711778" y="353.0" />
+      <point x="906.4375" y="275.0" />
+      <point x="921.4375" y="217.0" />
+      <point x="954.8198327850878" y="132.0" />
+      <point x="1002.8198327850877" y="78.0" />
+      <point x="1076.3848684210527" y="18.0" />
+      <point x="-27.15789473684208" y="15.0" />
+    </edge>
+    <edge source="java.persistence" target="hu.kleatech.jigsaw.model">
+      <point x="0.0" y="-15.0" />
+      <point x="41.5" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.api" target="hu.kleatech.jigsaw.service">
+      <point x="55.5" y="-15.0" />
+      <point x="800.0" y="430.0" />
+      <point x="846.934572760025" y="324.0" />
+      <point x="892.934572760025" y="289.0" />
+      <point x="1027.9388804041353" y="269.0" />
+      <point x="-70.0" y="15.0" />
+    </edge>
+    <edge source="spring.web" target="hu.kleatech.jigsaw.controller">
+      <point x="0.0" y="-15.0" />
+      <point x="1444.2898359179198" y="145.0" />
+      <point x="1230.0427631578948" y="139.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="spring.boot" target="hu.kleatech.jigsaw.service">
+      <point x="-31.0" y="-15.0" />
+      <point x="1076.6888804041353" y="240.0" />
+      <point x="1184.9388804041353" y="239.0" />
+      <point x="70.0" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.model" target="hu.kleatech.jigsaw.persistence">
+      <point x="-55.33333333333337" y="-15.0" />
+      <point x="1224.4656073778197" y="435.0" />
+      <point x="1223.5638804041353" y="347.0" />
+      <point x="23.875" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.api" target="hu.kleatech.jigsaw.controller">
+      <point x="18.5" y="-15.0" />
+      <point x="783.0" y="441.0" />
+      <point x="866.4388804041353" y="224.0" />
+      <point x="902.4388804041353" y="190.0" />
+      <point x="1163.6141917293232" y="144.0" />
+      <point x="-78.42857142857144" y="15.0" />
+    </edge>
+    <edge source="hibernate.core" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="spring.data.jpa" target="hu.kleatech.jigsaw">
+      <point x="27.5" y="-15.0" />
+      <point x="1565.9155701754385" y="237.0" />
+      <point x="1544.6480263157894" y="101.0" />
+      <point x="61.10526315789457" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.controller" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1227.0427631578948" y="143.0" />
+      <point x="1162.3322368421052" y="143.0" />
+      <point x="6.789473684210407" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.model" target="hu.kleatech.jigsaw.controller">
+      <point x="0.0" y="-15.0" />
+      <point x="1333.798940711153" y="373.0" />
+      <point x="1346.6888804041353" y="265.0" />
+      <point x="1327.6888804041353" y="173.0" />
+      <point x="1303.328477443609" y="143.0" />
+      <point x="52.285714285714334" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.scripting" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="850.0" y="147.0" />
+      <point x="1028.016447368421" y="19.0" />
+      <point x="-47.526315789473756" y="15.0" />
+    </edge>
+    <edge source="spring.boot.autoconfigure" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1123.0" y="10.0" />
+      <point x="1050.8059210526317" y="12.0" />
+      <point x="-40.73684210526312" y="15.0" />
+    </edge>
+    <edge source="spring.context" target="hu.kleatech.jigsaw.persistence">
+      <point x="40.125" y="-15.0" />
+      <point x="952.983513471178" y="356.0" />
+      <point x="1179.0638804041353" y="343.0" />
+      <point x="-71.625" y="15.0" />
+    </edge>
+    <edge source="thymeleaf.extras.java8time" target="hu.kleatech.jigsaw">
+      <point x="0.0" y="-15.0" />
+      <point x="1037.5" y="17.0" />
+      <point x="1057.2269736842106" y="19.0" />
+      <point x="-54.31578947368416" y="15.0" />
+    </edge>
+    <edge source="spring.boot" target="hu.kleatech.jigsaw.controller">
+      <point x="0.0" y="-15.0" />
+      <point x="1072.6888804041353" y="239.0" />
+      <point x="1083.29414356203" y="190.0" />
+      <point x="1102.29414356203" y="174.0" />
+      <point x="1147.4713345864661" y="160.0" />
+      <point x="78.42857142857144" y="15.0" />
+    </edge>
+    <edge source="hu.kleatech.jigsaw.service" target="hu.kleatech.jigsaw.controller">
+      <point x="42.0" y="-15.0" />
+      <point x="1223.9388804041353" y="240.0" />
+      <point x="1221.7570488721803" y="140.0" />
+      <point x="-52.285714285714334" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="918.0" y="218.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+</Diagram>
+
