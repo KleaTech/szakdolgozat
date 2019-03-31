@@ -11,6 +11,7 @@ import java.util.Properties;
 public class TeamService implements hu.kleatech.jigsaw.service.interfaces.TeamService {
 
     @Autowired TeamRepository teamRepository;
+    @Autowired ParticipantService participantService;
 
     @Override
     public Team add(String name, Properties infos) {
@@ -29,6 +30,7 @@ public class TeamService implements hu.kleatech.jigsaw.service.interfaces.TeamSe
 
     @Override
     public void delete(Team entity) {
+        entity.getParticipants().forEach(p -> participantService.delete(p));
         teamRepository.delete(entity);
     }
 

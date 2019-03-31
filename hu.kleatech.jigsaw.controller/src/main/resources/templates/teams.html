@@ -8,12 +8,23 @@
     </head>
 
     <body>
-        <div th:fragment="fragment">
+        <div th:fragment="fragment" class="revert" th:onload="${'var compSelectedId;'}">
+            <div th:replace="teamModal :: fragment"></div>
+            <div th:replace="participantModal :: fragment"></div>
             <div class="container">
+                <div class="row">
+                    <h1 style="font-size: 72px">Teams</h1>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#teamModal">Add new team</button>
+                </div>
                 <div class="row">
                     <div th:each="team : ${teams}" class="col card" style="margin: 20px; min-width: 500px">
                         <div class="card-body">
-                            <h1 class="card-title" th:text="${team.name}"></h1>
+                            <h1 class="card-title" th:inline="text">
+                                [[${team.name}]]
+                                <img style="width: 2rem; height: 2rem; cursor: pointer" th:src="@{/img/trash.png}" th:onclick="${'$.get(&quot;/deleteTeam/' + team.id + '&quot;, function(html) {retrieveTeams()})'}"/>
+                            </h1>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" th:each="participant : ${team.participants}">
                                     <ul class="list-inline">
@@ -24,14 +35,17 @@
                                         </li>
                                         <li class="list-inline-item" th:text="${participant.name}"></li>
                                         <li class="list-inline-item" th:text="'(' + ${utils.birthDateToAge(participant.birthDate)} + ')'"></li>
+                                        <li class="list-inline-item">
+                                            <img style="width: 1rem; height: 1rem; cursor: pointer" th:src="@{/img/trash.png}" th:onclick="${'$.get(&quot;/deleteParticipant/' + participant.id + '&quot;, function(html) {retrieveTeams()})'}"/>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#participantModal" th:onclick="${'teamSelectedId = ' + team.id + ';'}">Add new participant</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
-
 </html>

@@ -1,91 +1,91 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <!--<link rel="icon" href="../../favicon.ico"/>-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <!--<link rel="icon" href="../../favicon.ico"/>-->
 
-    <title>Moduláris eredményrögzítő rendszer</title>
+        <title>Moduláris eredményrögzítő rendszer</title>
 
-    <style>
-        .revert {
-            all: revert;
-        }
-        input[type="text"] {
-            width: 100%;
-            box-sizing: border-box;
-            -webkit-box-sizing:border-box;
-            -moz-box-sizing: border-box;
-        }
-    </style>
+        <style>
+            .revert {
+                all: revert;
+            }
+            input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                -webkit-box-sizing:border-box;
+                -moz-box-sizing: border-box;
+            }
+        </style>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <script>
-        function retrieveEventGroup() {
+        <!-- Bootstrap core CSS -->
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+        <script>
+            function retrieveEventGroup() {
             var url = '/getEventGroupFragment/' + $('#eventGroupSelector').val();
             $("#eventSelectorPlaceholder").load(url);
             console.log("loaded");
-        }
-        function retrieveEvent() {
+            }
+            function retrieveEvent() {
             var url = '/getEventFragment/' + $('#eventSelector').val();
             $("#resultsPlaceholder").load(url);
             console.log("loaded");
-        }
-        function retrieveCompetition(id) {
+            }
+            function retrieveCompetition(id) {
             var url = '/getCompetitionFragment/' + id;
             $("#competitionPlaceholder").load(url);
             console.log("loaded");
-        }
-        function retrieveHome(caller) {
+            }
+            function retrieveHome(caller) {
             $("#contentPlaceholder").load('/getHomeFragment');
             $(caller).parent().attr("class", "nav-item");
             $("#home").attr("class", "nav-item active");
-        }
-        function retrieveTeams(caller) {
+            }
+            function retrieveTeams(caller) {
             $("#contentPlaceholder").load('/getTeamsFragment');
             $(caller).parent().attr("class", "nav-item");
             $("#teams").attr("class", "nav-item active");
-        }
-        function showError(message){
+            }
+            function showError(message){
             alert(message);
-        }
-        function send(id, json, placeholderId) {
+            }
+            function send(id, json, placeholderId) {
             $.ajax({
-                url: "/addRound/" + id,
-                type: 'POST',
-                data: JSON.stringify(json),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                dataType: "json",
-                success: function(data, textStatus, xhr){
-                    $("#" + placeholderId).innerHTML = data;
-                },
-                error: function(data, textStatus, xhr){
-                    showError(data.responseText);
-                }
+            url: "/addRound/" + id,
+            type: 'POST',
+            data: JSON.stringify(json),
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            dataType: "json",
+            success: function(data, textStatus, xhr){
+            $("#" + placeholderId).innerHTML = data;
+            },
+            error: function(data, textStatus, xhr){
+            showError(data.responseText);
+            }
             });
-        }
-    </script>
-</head>
-<body>
-    <!-- Static navbar -->
-    <div th:replace="fragments :: header"></div>
-    <div id="contentPlaceholder">
-        <div th:replace="fragments :: home"></div>
-    </div>
-    
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-</body>
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Static navbar -->
+        <div th:replace="fragments :: header"></div>
+        <div id="contentPlaceholder">
+            <div th:replace="fragments :: home"></div>
+        </div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://malsup.github.com/jquery.form.js"></script>
+        <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    </body>
 </html>

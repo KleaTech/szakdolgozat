@@ -5,6 +5,6 @@ doskey thanks=exit
 doskey bye=exit
 doskey later=exit
 doskey seeya=exit
-set exec="\hu.kleatech.jigsaw\target\hu.kleatech.jigsaw-1.0-SNAPSHOT-exec.jar"
+set exec="hu.kleatech.jigsaw\target\hu.kleatech.jigsaw-1.0-SNAPSHOT-exec.jar"
 rem run with: mvn spring-boot:run -pl hu.kleatech.jigsaw
 cmd /k

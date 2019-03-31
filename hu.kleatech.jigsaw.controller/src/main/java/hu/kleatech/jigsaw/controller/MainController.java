@@ -46,27 +46,6 @@ public class MainController {
         index(model, locale);
         return "fragments.html :: home";
     }
-    
-    @GetMapping("/getTeamsFragment")
-    public String getTeamsFragment(Model model, Locale locale) {
-        index(model, locale);
-        model.addAttribute("teams", teamService.getAll());
-        return "teams.html :: fragment";
-    }
-    
-    @PostMapping("/addTeam/{name}")
-    @ResponseBody
-    public String addTeam(Model model, @PathVariable("name") String name) {
-        teamService.add(name, null);
-        return "SUCCESS";
-    }
-    
-    @PostMapping("/addParticipant")
-    @ResponseBody
-    public String addParticipant(@ModelAttribute Participant request, Model model) {
-        participantService.add(request);
-        return "SUCCESS";
-    }
 
     @GetMapping("/getEventGroupFragment/{eventGroupId}")
     public String getEventGroupFragment(Model model, @PathVariable("eventGroupId") String eventGroupId) {

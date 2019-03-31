@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css"/>
-    <title>fragments</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header">
-    <a class="navbar-brand">Demo</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <head>
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css"/>
+        <title>fragments</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header">
+            <a class="navbar-brand">Demo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active" id="home">
-                <a class="nav-link" onclick="retrieveHome(this)" href="#">Home</a>
-            </li>
-            <li class="nav-item" id="teams">
-                <a class="nav-link" onclick="retrieveTeams(this)" href="#">Teams</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-    
-    <div class="container" th:with="eventGroups=${eventGroups}" th:fragment="home" onload="$(caller).parent().attr("class", "nav-item")">
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <h2>Event Group</h2>
-            <div class="input-group">
-                <select id="eventGroupSelector" class="form-control">
-                    <th:block th:each="eventGroup : ${eventGroups}">
-                        <option th:value="${eventGroup.id}" th:text="${eventGroup.name}"></option>
-                    </th:block>
-                </select>
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" onclick="retrieveEventGroup();">Select</button>
-                </span>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active" id="home">
+                        <a class="nav-link" onclick="retrieveHome(this)" href="#">Home</a>
+                    </li>
+                    <li class="nav-item" id="teams">
+                        <a class="nav-link" onclick="retrieveTeams(this)" href="#">Teams</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container" th:with="eventGroups=${eventGroups}" th:fragment="home" onload="$(caller).parent().attr("class", "nav-item")">
+             <div class="row">
+                <div class="col-12 col-lg-6">
+                    <h2>Event Group</h2>
+                    <div class="input-group">
+                        <select id="eventGroupSelector" class="form-control">
+                            <th:block th:each="eventGroup : ${eventGroups}">
+                                <option th:value="${eventGroup.id}" th:text="${eventGroup.name}"></option>
+                            </th:block>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" onclick="retrieveEventGroup();">Select</button>
+                        </span>
+                    </div>
+                </div>
+                <div id="eventSelectorPlaceholder" class="col-12 col-lg-6"></div>
+            </div>
+            <hr/>
+            <div id="resultsPlaceholder"></div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="competitionPlaceholder"></div>
+                </div>
             </div>
         </div>
-        <div id="eventSelectorPlaceholder" class="col-12 col-lg-6"></div>
-    </div>
-    <hr/>
-    <div id="resultsPlaceholder"></div>
-    <div class="row">
-        <div class="col-12">
-            <div id="competitionPlaceholder"></div>
-        </div>
-    </div>
-</div>
-</body>
+    </body>
 </html>
