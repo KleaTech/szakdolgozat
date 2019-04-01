@@ -37,7 +37,6 @@ public class MainController {
         model.addAttribute("username", "Béla");
         model.addAttribute("datetime", new Date());
         model.addAttribute("eventGroups", eventGroupService.getAll());
-        model.addAttribute("utils", ViewUtils.VIEWUTILS);
         return "index";
     }
     
@@ -68,13 +67,22 @@ public class MainController {
         model.addAttribute("func", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
         return compSelected.getTemplate() + " :: fragment";
     }
-    @PostMapping("/addRound/{id}")
+    @PostMapping("/addRound/{compId}")
     @ResponseBody
-    public String addRound(@ModelAttribute StaticMap<String> request, @PathVariable String id, Model model) {
-        Competition comp = competitionService.get(Long.parseLong(id));
+    public String addRound(@ModelAttribute StaticMap<String> request, @PathVariable String compId, Model model) {
+        Competition comp = competitionService.get(Long.parseLong(compId));
         Round round = new Round(participantService.getAll().get(0), comp, null);
         request.stream().filter(e -> !e.trim().isEmpty()).mapToDouble(Double::parseDouble).forEachOrdered(round::add);
         roundService.add(round);
+        return "SUCCESS";
+    }
+    @PostMapping("/editRound/{id}")
+    @ResponseBody
+    public String editRound(@ModelAttribute StaticMap<String> request, @PathVariable String id, Model model) {
+        Round old = roundService.get(Long.parseLong(id));
+        Round nevv = new Round(participantService.getAll().get(0), old.getCompetition(), null);
+        request.stream().filter(e -> !e.trim().isEmpty()).mapToDouble(Double::parseDouble).forEachOrdered(nevv::add);
+        roundService.replace(old, nevv);
         return "SUCCESS";
     }
 }

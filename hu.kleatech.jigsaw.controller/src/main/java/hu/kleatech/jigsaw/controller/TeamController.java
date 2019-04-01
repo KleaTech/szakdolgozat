@@ -19,8 +19,6 @@ public class TeamController {
     @GetMapping("/getTeamsFragment")
     public String getTeamsFragment(Model model, Locale locale) {
         model.addAttribute("teams", teamService.getAll());
-        model.addAttribute("pojo", new StaticMap<String>());
-        model.addAttribute("utils", ViewUtils.VIEWUTILS);
         model.addAttribute("pojo", new ObjectTransferHandler.ParticipantDTO());
         return "teams.html :: fragment";
     }

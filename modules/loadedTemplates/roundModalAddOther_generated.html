@@ -15,18 +15,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="form" th:competition="${compSelected.id}" th:action="@{|/addRound/${compSelected.id}|}" th:object="${pojo}" method="post">
+                <form id="formRound" th:competition="${compSelected.id}" addr="" th:object="${pojo}" method="post">
                     <div class="table-responsive">
                         <table class="table table-sm">
                             <tr>
-                                <td><input type="text" th:field="*{first}"/></td>
-                                <td><input type="text" th:field="*{second}"/></td>
-                                <td><input type="text" th:field="*{third}"/></td>
+                                <td><input type="number" th:field="*{first}"/></td>
+                                <td><input type="number" th:field="*{second}"/></td>
+                                <td><input type="number" th:field="*{third}"/></td>
                             </tr>
                         </table>
                     </div>
                 </form>
-                <button onclick='$("#roundModalAddOther").removeClass("fade"); $("#roundModalAddOther").modal("hide"); $.post($("#form").attr("action"), $("#form").serialize(), function(html) {retrieveCompetition($("#form").attr("competition"))});' class="btn btn-primary">Save</button>
+                <button onclick='$("#roundModalAddOther").removeClass("fade"); $("#roundModalAddOther").modal("hide"); $.post($("#formRound").attr("addr"), $("#formRound").serialize(), function(html) {retrieveCompetition($("#formRound").attr("competition"))});' class="btn btn-primary">Save</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
