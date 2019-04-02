@@ -1,6 +1,7 @@
 package hu.kleatech.jigsaw.model;
 
 import static hu.kleatech.jigsaw.utils.StringUtils.*;
+import static hu.kleatech.jigsaw.utils.Utils.TryOrNull;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,15 +82,15 @@ public class Round {
     }
 
     public List<Double> preresults(Function<List<Double>, List<Double>> logic) {
-        return logic.apply(values);
+        return TryOrNull(() -> logic.apply(values));
     }
 
     //From values, not from preresults
     public Double result(Function<List<Double>, Double> logic) {
-        return logic.apply(values);
+        return TryOrNull(() -> logic.apply(values));
     }
 
     public static List<Round> order(List<Round> rounds, Function<List<Round>, List<Round>> ordering) {
-        return ordering.apply(rounds);
+        return TryOrNull(() -> ordering.apply(rounds));
     }
 }

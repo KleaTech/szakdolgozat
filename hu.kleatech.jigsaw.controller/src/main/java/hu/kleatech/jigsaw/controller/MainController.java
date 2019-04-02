@@ -85,4 +85,10 @@ public class MainController {
         roundService.replace(old, nevv);
         return "SUCCESS";
     }
+    @GetMapping("/deleteRound/{id}")
+    @ResponseBody
+    public String deleteRound(@PathVariable Long id, Model model) {
+        roundService.delete(roundService.get(id));
+        return "SUCCESS";
+    }
 }

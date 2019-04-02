@@ -9,6 +9,7 @@ public final class JavaScript {
     public String apos(String str) { return "'" + str + "'"; }
     public String quot() { return "\""; }
     public String apos() { return "'"; }
+    public Then func(String name) { return new Then(name + '('); }
     
     public static final class Then {
         private String soFar;

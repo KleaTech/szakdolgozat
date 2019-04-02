@@ -31,7 +31,7 @@ public class RoundService implements hu.kleatech.jigsaw.service.interfaces.Round
 
     @Override
     public void delete(Round entity) {
-        roundRepository.delete(entity);
+        roundRepository.delete(entity.getId());
     }
 
     @Override
