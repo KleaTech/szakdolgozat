@@ -14,8 +14,8 @@ public class TeamService implements hu.kleatech.jigsaw.service.interfaces.TeamSe
     @Autowired ParticipantService participantService;
 
     @Override
-    public Team add(String name, Properties infos) {
-        return teamRepository.save(new Team(name, infos));
+    public Team add(String name, String template, Properties infos) {
+        return teamRepository.save(new Team(name, template, infos));
     }
 
     @Override

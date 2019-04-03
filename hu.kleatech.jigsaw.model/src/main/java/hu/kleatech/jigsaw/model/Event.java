@@ -75,6 +75,5 @@ public class Event implements Serializable {
         this.infos = newEvent.infos;
         this.name = newEvent.name;
         this.teams = newEvent.teams;
-        this.template = newEvent.template;
     }
 }

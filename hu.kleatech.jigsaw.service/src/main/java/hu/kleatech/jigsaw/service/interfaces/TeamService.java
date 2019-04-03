@@ -4,5 +4,5 @@ import hu.kleatech.jigsaw.model.Team;
 import java.util.Properties;
 
 public interface TeamService extends BaseService<Team> {
-    Team add(String name, Properties infos);
+    Team add(String name, String template, Properties infos);
 }

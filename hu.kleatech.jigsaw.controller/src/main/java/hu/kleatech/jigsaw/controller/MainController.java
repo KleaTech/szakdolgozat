@@ -13,10 +13,12 @@ import hu.kleatech.jigsaw.api.EngineProvider;
 import static hu.kleatech.jigsaw.utils.Utils.*;
 import java.util.*;
 import static hu.kleatech.jigsaw.controller.ControllerUtils.*;
+import java.util.stream.Collectors;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 @Controller
 @Transactional
+@SessionAttributes({"eventSelected", "participantSelected"})
 public class MainController {
 
     @Autowired EventGroupService eventGroupService;
@@ -47,31 +49,49 @@ public class MainController {
     }
 
     @GetMapping("/getEventGroupFragment/{eventGroupId}")
-    public String getEventGroupFragment(Model model, @PathVariable("eventGroupId") String eventGroupId) {
-        EventGroup eventGroupSelected = eventGroupService.get(Long.parseLong(eventGroupId));
-        model.addAttribute("eventGroupSelected", eventGroupSelected.getEvents());
+    public String getEventGroupFragment(Model model, @PathVariable("eventGroupId") Long eventGroupId) {
+        EventGroup eventGroupSelected = eventGroupService.get(eventGroupId);
+        model.addAttribute("eventGroupSelected", eventGroupSelected);
         return eventGroupSelected.getTemplate() + " :: fragment";
     }
+    
+    //@ModelAttribute("eventSelected")
+    //public Long eventSelectedSessionScopedAttribute(){ return null; }
+    
     @GetMapping("/getEventFragment/{eventId}")
-    public String getEventFragment(Model model, @PathVariable("eventId") String eventId) {
-        Event eventSelected = eventService.get(Long.parseLong(eventId));
-        model.addAttribute("eventSelected", eventSelected.getCompetitions());
+    public String getEventFragment(Model model, @PathVariable("eventId") Long eventId) {
+        Event eventSelected = eventService.get(eventId);
+        model.addAttribute("eventSelected", eventSelected);
+        model.addAttribute("teams", teamService.getAll());
         return eventSelected.getTemplate() + " :: fragment";
     }
     @GetMapping("/getCompetitionFragment/{compId}")
-    public String getCompetitionFragment(Model model, @PathVariable("compId") String compId) {
-        Competition compSelected = competitionService.get(Long.parseLong(compId));
+    public String getCompetitionFragment(Model model, @PathVariable("compId") Long compId) {
+        Competition compSelected = competitionService.get(compId);
         model.addAttribute("compSelected", compSelected);
+        model.addAttribute("actualRounds", compSelected.getRounds().stream().filter(r -> r.getParticipant().getId().equals(((Participant)model.asMap().get("participantSelected")).getId())).collect(Collectors.toList()));
         model.addAttribute("pojo", new StaticMap<String>());
         model.addAttribute("prefunc", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).preresults(scriptName(compSelected, ResultType.PRERESULT))));
         model.addAttribute("func", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
         return compSelected.getTemplate() + " :: fragment";
     }
-    @PostMapping("/addRound/{compId}")
+    @GetMapping("/getTeamFragment/{teamId}")
+    public String getTeamFragment(Model model, @PathVariable("teamId") Long teamId) {
+        Team teamSelected = teamService.get(teamId);
+        model.addAttribute("teamSelected", teamSelected);
+        return teamSelected.getTemplate() + " :: fragment";
+    }
+    @GetMapping("/getParticipantFragment/{partId}")
+    public String getParticipantFragment(Model model, @PathVariable("partId") Long partId) {
+        Participant participantSelected = participantService.get(partId);
+        model.addAttribute("participantSelected", participantSelected);
+        return participantSelected.getTemplate() + " :: fragment";
+    }
+    @PostMapping("/addRound/{compId}/{partId}")
     @ResponseBody
-    public String addRound(@ModelAttribute StaticMap<String> request, @PathVariable String compId, Model model) {
-        Competition comp = competitionService.get(Long.parseLong(compId));
-        Round round = new Round(participantService.getAll().get(0), comp, null);
+    public String addRound(@ModelAttribute StaticMap<String> request, @PathVariable("compId") Long compId, @PathVariable("partId") Long partId,  Model model) {
+        Competition comp = competitionService.get(compId);
+        Round round = new Round(participantService.get(partId), comp, null);
         request.stream().filter(e -> !e.trim().isEmpty()).mapToDouble(Double::parseDouble).forEachOrdered(round::add);
         roundService.add(round);
         return "SUCCESS";

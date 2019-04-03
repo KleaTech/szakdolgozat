@@ -21,23 +21,26 @@
                 -webkit-box-sizing:border-box;
                 -moz-box-sizing: border-box;
             }
+            td > input[type="number"] {
+                width: 7em;
+            }
         </style>
 
         <!-- Bootstrap core CSS -->
         <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
         <script>
-            function retrieveEventGroup() {
-            var url = '/getEventGroupFragment/' + $('#eventGroupSelector').val();
-            $("#eventSelectorPlaceholder").load(url);
+            function retrieveEventGroup(id) {
+            var url = '/getEventGroupFragment/' + id;
+            $("#eventGroupPlaceholder").load(url);
             console.log("loaded");
             }
-            function retrieveEvent() {
-            var url = '/getEventFragment/' + $('#eventSelector').val();
-            $("#resultsPlaceholder").load(url);
+            function retrieveEvent(id) {
+            var url = '/getEventFragment/' + id;
+            $("#eventPlaceholder").load(url);
             console.log("loaded");
             }
-            function retrieveCompetition(id) {
-            var url = '/getCompetitionFragment/' + id;
+            function retrieveCompetition(compid) {
+            var url = '/getCompetitionFragment/' + compid;
             $("#competitionPlaceholder").load(url);
             console.log("loaded");
             }
@@ -51,12 +54,22 @@
             $(caller).parent().attr("class", "nav-item");
             $("#teams").attr("class", "nav-item active");
             }
+            function retrieveTeam(id) {
+            var url = '/getTeamFragment/' + id;
+            $("#teamPlaceholder").load(url);
+            console.log("loaded");
+            }
+            function retrieveParticipant(id) {
+            var url = '/getParticipantFragment/' + id;
+            $("#participantPlaceholder").load(url);
+            console.log("loaded");
+            }
             function showError(message){
             alert(message);
             }
-            function send(id, json, placeholderId) {
+            function send(compId, partId, json, placeholderId) {
             $.ajax({
-            url: "/addRound/" + id,
+            url: "/addRound/" + compId + "/" + partId,
             type: 'POST',
             data: JSON.stringify(json),
             headers: {

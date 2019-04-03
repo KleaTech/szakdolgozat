@@ -28,15 +28,19 @@ public class Team implements Serializable {
     @Column
     @Lob
     private Properties infos;
+    
+    @Column
+    private String template;
 
     @Id
     @GeneratedValue
     private Long id;
 
     protected Team(){} //For serialization only
-    public Team(String name, Properties infos) {
+    public Team(String name, String template, Properties infos) {
         this.name = name;
         this.infos = infos;
+        this.template = template;
     }
 
     @PostLoad
@@ -51,6 +55,7 @@ public class Team implements Serializable {
     public String getName() { return name; }
     public List<Participant> getParticipants() { return participants; }
     public List<Round> getRounds() { return rounds; }
+    public String getTemplate() { return template; }
     public Properties getInfos() { return infos==null?new Properties():infos; }
     public Long getId() { return id; }
 

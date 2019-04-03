@@ -26,7 +26,7 @@ public class TeamController {
     @PostMapping("/addTeam")
     @ResponseBody
     public String addTeam(Model model, @RequestParam String name) {
-        teamService.add(name, null);
+        teamService.add(name, "teamFragment_generated", null);
         return "SUCCESS";
     }
     

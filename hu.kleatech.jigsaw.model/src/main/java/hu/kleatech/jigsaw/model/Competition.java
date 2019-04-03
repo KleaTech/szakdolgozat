@@ -77,6 +77,5 @@ public class Competition implements Serializable {
         this.name = newCompetition.name;
         this.rounds = newCompetition.rounds;
         this.teams = newCompetition.teams;
-        this.template = newCompetition.template;
     }
 }

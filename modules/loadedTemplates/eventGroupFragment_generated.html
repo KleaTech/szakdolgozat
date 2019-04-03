@@ -6,17 +6,17 @@
 </head>
 <body>
 <th:block th:fragment="fragment">
-    <h2>Event</h2>
-    <div class="input-group">
-        <select id="eventSelector" class="form-control">
-            <th:block th:each="event : ${eventGroupSelected}">
-                <option th:value="${event.id}" th:text="${event.name}"></option>
-            </th:block>
-        </select>
-        <span class="form-control-btn">
-            <button class="btn btn-primary" onclick="retrieveEvent();">Select</button>
-        </span>
-    </div>
+		<h2>Event</h2>
+		<div class="input-group">
+			<select id="eventSelector" class="form-control">
+				<th:block th:each="event : ${eventGroupSelected.events}">
+					<option th:value="${event.id}" th:text="${event.name}"></option>
+				</th:block>
+			</select>
+			<span class="form-control-btn">
+				<button class="btn btn-primary" th:onclick="${js.func('retrieveEvent').argObj(js.queryById('eventSelector').func('val'))}">Select</button>
+			</span>
+		</div>
 </th:block>
 </body>
 </html>

@@ -55,7 +55,6 @@ public class EventGroup implements Serializable{
         this.infos = newEventGroup.infos;
         this.events = newEventGroup.events;
         this.name = newEventGroup.name;
-        this.template = newEventGroup.template;
     }
 
 }

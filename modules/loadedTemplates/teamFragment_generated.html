@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>fragment</title>
+</head>
+<body>
+<th:block th:fragment="fragment">
+		<h2>Participant</h2>
+		<div class="input-group">
+			<select id="participantSelector" class="form-control">
+				<th:block th:each="participant : ${teamSelected.participants}">
+					<option th:value="${participant.id}" th:text="${participant.name}"></option>
+				</th:block>
+			</select>
+			<span class="form-control-btn">
+				<button class="btn btn-primary" th:onclick="${js.func('retrieveParticipant').argObj(js.queryById('participantSelector').func('val'))}">Select</button>
+			</span>
+		</div>
+</th:block>
+</body>
+</html>

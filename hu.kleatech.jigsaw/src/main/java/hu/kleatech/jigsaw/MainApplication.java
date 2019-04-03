@@ -67,22 +67,14 @@ public class MainApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Team team1 = teamService.add("Avasi", null);
-			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, null);
-		Team team2 = teamService.add("Diósgyőri", null);
-			participantService.add("Kovács István", LocalDate.now().minusYears(20), Sex.MALE, team2, null);
-			participantService.add("Tóth Noémi", LocalDate.now().minusYears(21), Sex.FEMALE, team2, null);
-                Team team3 = teamService.add("Jezsuita", null);
-                        participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, null);
-                        participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, null);
-                Team team4 = teamService.add("Avasi", null);
-			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team4, null);
-		Team team5 = teamService.add("Diósgyőri", null);
-			participantService.add("Kovács István", LocalDate.now().minusYears(20), Sex.MALE, team5, null);
-			participantService.add("Tóth Noémi", LocalDate.now().minusYears(21), Sex.FEMALE, team5, null);
-                Team team6 = teamService.add("Jezsuita", null);
-                        participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team6, null);
-                        participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team6, null);
+		Team team1 = teamService.add("Avasi", "teamFragment_generated", null);
+			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, "participantFragment_generated", null);
+		Team team2 = teamService.add("Diósgyőri", "teamFragment_generated", null);
+			participantService.add("Kovács István", LocalDate.now().minusYears(20), Sex.MALE, team2, "participantFragment_generated", null);
+			participantService.add("Tóth Noémi", LocalDate.now().minusYears(21), Sex.FEMALE, team2, "participantFragment_generated", null);
+                Team team3 = teamService.add("Jezsuita", "teamFragment_generated", null);
+                        participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, "participantFragment_generated", null);
+                        participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, "participantFragment_generated", null);
 		EventGroup eventGroup = eventGroupService.add("Diákolimpia", "eventGroupFragment_generated", null);
 			Event girl = eventService.add(eventGroup, "Lány", "eventFragment_generated", null);
 				competitionService.add(girl, "competition", "competitionFragment_default", null);

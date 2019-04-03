@@ -19,7 +19,7 @@
     </tr>
     </thead>
     <tbody>
-    <th:block th:each="round : ${compSelected.rounds}">
+    <th:block th:each="round : ${actualRounds}">
         <tr th:if="${round.values.size()>2}">
             <td th:text="${round.values.get(0)}"></td>
             <td th:text="${round.values.get(1)}"></td>
@@ -43,7 +43,7 @@
     </tbody>
 </table>
 <div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#roundModalAddJump" th:onclick="${js.queryById('formRound').func('attr').argStr('addr').argStr('/addRound/' + compSelected.id)}">Add</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#roundModalAddJump" th:onclick="${js.queryById('formRound').func('attr').argStr('addr').argStr('/addRound/' + compSelected.id + '/' + participantSelected.id)}">Add</button>
 </div>
 </div>
 </body>

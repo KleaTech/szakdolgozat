@@ -36,14 +36,18 @@ public class Participant implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    
+    @Column
+    private String template;
 
     protected Participant(){} //For serialization only
-    public Participant(String name, LocalDate birthDate, Sex sex, Team team, Properties infos) {
+    public Participant(String name, LocalDate birthDate, Sex sex, Team team, String template, Properties infos) {
         this.name = name;
         this.birthDate = birthDate;
         this.sex = sex;
         this.infos = infos;
         this.team = team;
+        this.template = template;
     }
 
     public String getName() { return name; }
@@ -52,6 +56,7 @@ public class Participant implements Serializable {
     public Properties getInfos() { return infos==null?new Properties():infos; }
     public Team getTeam() { return team; }
     public List<Round> getRounds() { return rounds==null?Collections.emptyList():rounds; }
+    public String getTemplate() { return template; }
     public Long getId() { return id; }
 
     @Override
