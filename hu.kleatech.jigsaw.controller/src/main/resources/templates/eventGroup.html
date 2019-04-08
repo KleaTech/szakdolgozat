@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Event groups</title>
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css"/>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <th:block th:fragment="fragment">
+            <div th:replace="teamModal :: fragment"></div>
+            <div th:replace="participantModal :: fragment"></div>
+            <div class="container">
+                <div class="row" >
+                    <div class="col-12 col-lg-6">
+                        <h1 style="font-size: 72px">Teams</h1>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="input-group">
+                            <select id="eventGroupSelector" class="form-control">
+                                <th:block th:each="eventGroup : ${eventGroups}">
+                                    <option th:value="${eventGroup.id}" th:text="${eventGroup.name}"></option>
+                                </th:block>
+                            </select>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" th:onclick="${js.func('retrieveTeams').argObj(js.queryById('eventGroupSelector').func('val'))}">Select</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="teamsPlaceholder"></div>
+            </div>
+        </th:block>
+    </body>
+</html>

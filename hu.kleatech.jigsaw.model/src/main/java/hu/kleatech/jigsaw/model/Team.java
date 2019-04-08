@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 
 @Entity
 public class Team implements Serializable {
+    @ManyToOne
+    @JoinColumn(name="associatedTeams")
+    private EventGroup associatedEventGroup;
+    
     @Transient
     private List<Event> events;
 
@@ -37,10 +41,11 @@ public class Team implements Serializable {
     private Long id;
 
     protected Team(){} //For serialization only
-    public Team(String name, String template, Properties infos) {
+    public Team(String name, String template, EventGroup associatedEventGroup, Properties infos) {
         this.name = name;
         this.infos = infos;
         this.template = template;
+        this.associatedEventGroup = associatedEventGroup;
     }
 
     @PostLoad
@@ -58,6 +63,7 @@ public class Team implements Serializable {
     public String getTemplate() { return template; }
     public Properties getInfos() { return infos==null?new Properties():infos; }
     public Long getId() { return id; }
+    public EventGroup getAssociatedEventGroup() { return associatedEventGroup; }
 
     @Override
     public boolean equals(Object o) {
@@ -80,5 +86,6 @@ public class Team implements Serializable {
         this.name = newTeam.name;
         this.participants = newTeam.participants;
         this.rounds = newTeam.rounds;
+        this.associatedEventGroup = newTeam.associatedEventGroup;
     }
 }

@@ -44,7 +44,7 @@ public class Event implements Serializable {
 
     @PostLoad
     private void onLoad() {
-        this.teams = getCompetitions().stream().map(c -> c.getTeams()).flatMap(t -> t.stream()).collect(Collectors.toList());
+        this.teams = getCompetitions().stream().flatMap(c -> c.getTeams().stream()).collect(Collectors.toList());
     }
 
     public EventGroup getEventGroup() { return eventGroup; }

@@ -67,15 +67,15 @@ public class MainApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Team team1 = teamService.add("Avasi", "teamFragment_generated", null);
+            EventGroup eventGroup = eventGroupService.add("Diákolimpia", "eventGroupFragment_generated", null);
+		Team team1 = teamService.add("Avasi", "teamFragment_generated", eventGroup, null);
 			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, "participantFragment_generated", null);
-		Team team2 = teamService.add("Diósgyőri", "teamFragment_generated", null);
+		Team team2 = teamService.add("Diósgyőri", "teamFragment_generated", eventGroup, null);
 			participantService.add("Kovács István", LocalDate.now().minusYears(20), Sex.MALE, team2, "participantFragment_generated", null);
 			participantService.add("Tóth Noémi", LocalDate.now().minusYears(21), Sex.FEMALE, team2, "participantFragment_generated", null);
-                Team team3 = teamService.add("Jezsuita", "teamFragment_generated", null);
+                Team team3 = teamService.add("Jezsuita", "teamFragment_generated", eventGroup, null);
                         participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, "participantFragment_generated", null);
                         participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, "participantFragment_generated", null);
-		EventGroup eventGroup = eventGroupService.add("Diákolimpia", "eventGroupFragment_generated", null);
 			Event girl = eventService.add(eventGroup, "Lány", "eventFragment_generated", null);
 				competitionService.add(girl, "competition", "competitionFragment_default", null);
 			Event boy = eventService.add(eventGroup, "Fiú", "eventFragment_generated", null);
