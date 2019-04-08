@@ -18,7 +18,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 @Controller
 @Transactional
-@SessionAttributes({"eventSelected", "participantSelected"})
+@SessionAttributes({"eventSelected", "teamSelected"})
 public class MainController {
 
     @Autowired EventGroupService eventGroupService;
@@ -69,7 +69,10 @@ public class MainController {
     public String getCompetitionFragment(Model model, @PathVariable("compId") Long compId) {
         Competition compSelected = competitionService.get(compId);
         model.addAttribute("compSelected", compSelected);
-        model.addAttribute("actualRounds", compSelected.getRounds().stream().filter(r -> r.getParticipant().getId().equals(((Participant)model.asMap().get("participantSelected")).getId())).collect(Collectors.toList()));
+        Team old = (Team)model.asMap().get("teamSelected");
+        Team nevv = teamService.get(old);
+        model.addAttribute("teamSelected", nevv);
+        model.addAttribute("actualRounds", compSelected.getRounds().stream().filter(r -> r.getParticipant().getTeam().equals(nevv)).collect(Collectors.toList()));
         model.addAttribute("pojo", new StaticMap<String>());
         model.addAttribute("prefunc", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).preresults(scriptName(compSelected, ResultType.PRERESULT))));
         model.addAttribute("func", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
@@ -80,12 +83,6 @@ public class MainController {
         Team teamSelected = teamService.get(teamId);
         model.addAttribute("teamSelected", teamSelected);
         return teamSelected.getTemplate() + " :: fragment";
-    }
-    @GetMapping("/getParticipantFragment/{partId}")
-    public String getParticipantFragment(Model model, @PathVariable("partId") Long partId) {
-        Participant participantSelected = participantService.get(partId);
-        model.addAttribute("participantSelected", participantSelected);
-        return participantSelected.getTemplate() + " :: fragment";
     }
     @PostMapping("/addRound/{compId}/{partId}")
     @ResponseBody

@@ -1,10 +1,13 @@
 package hu.kleatech.jigsaw.controller;
 
+import hu.kleatech.jigsaw.model.EventGroup;
 import hu.kleatech.jigsaw.model.Participant;
+import hu.kleatech.jigsaw.service.interfaces.EventGroupService;
 import hu.kleatech.jigsaw.service.interfaces.ParticipantService;
 import hu.kleatech.jigsaw.service.interfaces.TeamService;
 import hu.kleatech.jigsaw.utils.StaticMap;
 import java.util.Locale;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,18 +18,27 @@ public class TeamController {
     
     @Autowired TeamService teamService;
     @Autowired ParticipantService participantService;
+    @Autowired EventGroupService eventGroupService;
     
-    @GetMapping("/getTeamsFragment")
-    public String getTeamsFragment(Model model, Locale locale) {
-        model.addAttribute("teams", teamService.getAll());
+    @GetMapping("/getEventGroup")
+    public String getEventGroup(Model model) {
+        model.addAttribute("eventGroups", eventGroupService.getAll());
+        model.addAttribute("pojo", new ObjectTransferHandler.ParticipantDTO());
+        return "eventGroup.html :: fragment";
+    }
+    
+    @GetMapping("/getTeamsFragment/{eventGroupId}")
+    public String getTeamsFragment(Model model, @PathVariable Long eventGroupId) {
+        model.addAttribute("eventGroups", eventGroupService.getAll());
+        model.addAttribute("teams", eventGroupService.get(eventGroupId).getAssociatedTeams());
         model.addAttribute("pojo", new ObjectTransferHandler.ParticipantDTO());
         return "teams.html :: fragment";
     }
     
-    @PostMapping("/addTeam")
+    @PostMapping("/addTeam/{associatedEventGroupId}")
     @ResponseBody
-    public String addTeam(Model model, @RequestParam String name) {
-        teamService.add(name, "teamFragment_generated", null);
+    public String addTeam(Model model, @RequestParam String name, @PathVariable Long associatedEventGroupId) {
+        teamService.add(name, "teamFragment_generated", eventGroupService.get(associatedEventGroupId), null);
         return "SUCCESS";
     }
     

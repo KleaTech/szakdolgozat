@@ -9,6 +9,9 @@ import java.util.*;
 public class EventGroup implements Serializable{
     @OneToMany(mappedBy = "eventGroup", cascade = CascadeType.ALL)
     private List<Event> events;
+    
+    @OneToMany(mappedBy = "associatedEventGroup")
+    private List<Team> associatedTeams;
 
     @Column
     private String name;
@@ -36,6 +39,7 @@ public class EventGroup implements Serializable{
     public String getTemplate() { return template; }
     public Long getId() { return id; }
     public Properties getInfos() { return infos==null?new Properties():infos; }
+    public List<Team> getAssociatedTeams() { return associatedTeams; }
 
     @Override
     public boolean equals(Object o) {
@@ -55,6 +59,7 @@ public class EventGroup implements Serializable{
         this.infos = newEventGroup.infos;
         this.events = newEventGroup.events;
         this.name = newEventGroup.name;
+        this.associatedTeams = newEventGroup.associatedTeams;
     }
 
 }

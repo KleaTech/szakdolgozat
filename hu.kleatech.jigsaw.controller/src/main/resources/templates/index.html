@@ -32,11 +32,13 @@
             function retrieveEventGroup(id) {
             var url = '/getEventGroupFragment/' + id;
             $("#eventGroupPlaceholder").load(url);
+            $("#eventPlaceholder").empty();
             console.log("loaded");
             }
             function retrieveEvent(id) {
             var url = '/getEventFragment/' + id;
             $("#eventPlaceholder").load(url);
+            $("#teamPlaceholder").empty();
             console.log("loaded");
             }
             function retrieveCompetition(compid) {
@@ -44,25 +46,26 @@
             $("#competitionPlaceholder").load(url);
             console.log("loaded");
             }
+            function retrieveTeam(id) {
+            var url = '/getTeamFragment/' + id;
+            $("#teamPlaceholder").load(url);
+            $("#competitionPlaceholder").empty();
+            console.log("loaded");
+            }
             function retrieveHome(caller) {
             $("#contentPlaceholder").load('/getHomeFragment');
             $(caller).parent().attr("class", "nav-item");
             $("#home").attr("class", "nav-item active");
             }
-            function retrieveTeams(caller) {
-            $("#contentPlaceholder").load('/getTeamsFragment');
-            $(caller).parent().attr("class", "nav-item");
-            $("#teams").attr("class", "nav-item active");
+            function retrieveTeams(id) {
+            var url = '/getTeamsFragment/' + id;
+            $("#teamsPlaceholder").load(url);
             }
-            function retrieveTeam(id) {
-            var url = '/getTeamFragment/' + id;
-            $("#teamPlaceholder").load(url);
-            console.log("loaded");
-            }
-            function retrieveParticipant(id) {
-            var url = '/getParticipantFragment/' + id;
-            $("#participantPlaceholder").load(url);
-            console.log("loaded");
+            function retrieveEventGroupForTeams(caller) {
+            var url = '/getEventGroup';
+            $("#contentPlaceholder").load(url);
+            //$(caller).parent().attr("class", "nav-item");
+            //$("#teams").attr("class", "nav-item active");
             }
             function showError(message){
             alert(message);

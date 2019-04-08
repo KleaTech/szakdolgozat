@@ -1,5 +1,6 @@
 package hu.kleatech.jigsaw.service;
 
+import hu.kleatech.jigsaw.model.EventGroup;
 import hu.kleatech.jigsaw.model.Team;
 import hu.kleatech.jigsaw.persistence.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class TeamService implements hu.kleatech.jigsaw.service.interfaces.TeamSe
     @Autowired ParticipantService participantService;
 
     @Override
-    public Team add(String name, String template, Properties infos) {
-        return teamRepository.save(new Team(name, template, infos));
+    public Team add(String name, String template, EventGroup associatedEventGroup, Properties infos) {
+        return teamRepository.save(new Team(name, template, associatedEventGroup, infos));
     }
 
     @Override
