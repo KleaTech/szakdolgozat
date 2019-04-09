@@ -3,6 +3,8 @@ module hu.kleatech.jigsaw.service {
     requires spring.context;
     requires spring.beans;
     requires spring.boot;
+    requires com.fasterxml.jackson.databind;
+    //exports hu.kleatech.jigsaw.service.serialization to com.fasterxml.jackson.databind;
     exports hu.kleatech.jigsaw.service to spring.core;
     opens hu.kleatech.jigsaw.service to spring.core;
     opens hu.kleatech.jigsaw.service.interfaces to spring.core;

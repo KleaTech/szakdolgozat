@@ -8,8 +8,6 @@ import hu.kleatech.jigsaw.service.interfaces.*;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -19,6 +17,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
+import static hu.kleatech.jigsaw.utils.Utils.*;
 import hu.kleatech.jigsaw.scripting.EngineProvider;
 
 @SpringBootApplication
@@ -64,9 +63,11 @@ public class MainApplication implements ApplicationRunner {
 	@Autowired ParticipantService participantService;
 	@Autowired RoundService roundService;
 	@Autowired TeamService teamService;
+        @Autowired ManifestHandlerService manifestHandlerService;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+            Try(() -> manifestHandlerService.loadManifest("Diákolimpia"));
             EventGroup eventGroup = eventGroupService.add("Diákolimpia", "eventGroupFragment_generated", null);
 		Team team1 = teamService.add("Avasi", "teamFragment_generated", eventGroup, null);
 			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, "participantFragment_generated", null);
