@@ -6,7 +6,7 @@ import java.util.*;
 public class Constants {
     public static final String MODULES_DIR_NAME = "modules";
     public static final Path USER_DIR;
-    public static final String LOADED_MODULES_DIR_NAME = "loadedModules";
+    public static final String LOADED_MODULES_DIR_NAME = "loadedTemplates";
     
     static {
         Path path = Paths.get(System.getProperty("user.dir"));

@@ -67,8 +67,7 @@ public class MainApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-            Try(() -> manifestHandlerService.loadManifest("Diákolimpia"));
-            EventGroup eventGroup = eventGroupService.add("Diákolimpia", "eventGroupFragment_generated", null);
+            EventGroup eventGroup = eventGroupService.getAll().get(0);
 		Team team1 = teamService.add("Avasi", "teamFragment_generated", eventGroup, null);
 			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, "participantFragment_generated", null);
 		Team team2 = teamService.add("Diósgyőri", "teamFragment_generated", eventGroup, null);
@@ -77,14 +76,5 @@ public class MainApplication implements ApplicationRunner {
                 Team team3 = teamService.add("Jezsuita", "teamFragment_generated", eventGroup, null);
                         participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, "participantFragment_generated", null);
                         participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, "participantFragment_generated", null);
-			Event girl = eventService.add(eventGroup, "Lány", "eventFragment_generated", null);
-				competitionService.add(girl, "competition", "competitionFragment_default", null);
-			Event boy = eventService.add(eventGroup, "Fiú", "eventFragment_generated", null);
-				competitionService.add(boy, "Talaj", "competitionFragmentOther_generated", null);
-				competitionService.add(boy, "Távolugrás", "competitionFragmentJump_generated", null);
-                competitionService.add(boy, "Gyűrű", "competitionFragmentOther_generated", null);
-				competitionService.add(boy, "Ló", "competitionFragmentOther_generated", null);
-				competitionService.add(boy, "Korlát", "competitionFragmentOther_generated", null);
-				competitionService.add(boy, "Nyújtó", "competitionFragmentOther_generated", null);
 	}
 }

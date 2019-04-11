@@ -1,0 +1,48 @@
+{
+  "eventGroup": "Diákolimpia",
+  "template": "eventGroupFragment_generated",
+  "events": [
+    {
+      "name": "Fiú",
+      "template": "eventFragment_generated",
+      "competitions": [
+        {
+          "name": "Talaj",
+          "template": "competitionFragmentOther_generated"
+        },
+        {
+          "name": "Távolugrás",
+          "template": "competitionFragmentJump_generated"
+        },
+        {
+          "name": "Gyűrű",
+          "template": "competitionFragmentOther_generated"
+        },
+        {
+          "name": "Ló",
+          "template": "competitionFragmentOther_generated"
+        },
+        {
+          "name": "Korlát",
+          "template": "competitionFragmentOther_generated"
+        },
+        {
+          "name": "Nyújtó",
+          "template": "competitionFragmentOther_generated"
+        }
+      ]
+    },
+    {
+      "name": "Lány",
+      "template": "eventFragment_generated",
+      "competitions": [
+        {
+          "name": "competition",
+          "template": "competitionFragment_default"
+        }
+      ]
+    }
+  ],
+  "teamFragment": "teamFragment_generated",
+  "participantFragment": "participantFragment_generated"
+}

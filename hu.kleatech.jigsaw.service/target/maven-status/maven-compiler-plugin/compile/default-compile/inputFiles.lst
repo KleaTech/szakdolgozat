@@ -7,6 +7,7 @@
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/CompetitionService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/EventGroupService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/EventService.java
+/home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/TemplateLoaderService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/RoundService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/CompetitionService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/serialization/Events.java
