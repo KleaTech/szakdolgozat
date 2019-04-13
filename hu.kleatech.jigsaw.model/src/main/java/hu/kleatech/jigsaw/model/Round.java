@@ -52,7 +52,7 @@ public class Round {
         if (this == o) return true;
         if (!(o instanceof Round)) return false;
         Round round = (Round) o;
-        return Objects.equals(id, round.id);
+        return Objects.equals(getId(), round.getId());
     }
     @Override
     public int hashCode() { return Objects.hash(id); }

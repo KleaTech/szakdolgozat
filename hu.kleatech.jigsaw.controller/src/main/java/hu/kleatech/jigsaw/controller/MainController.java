@@ -13,6 +13,7 @@ import hu.kleatech.jigsaw.api.EngineProvider;
 import static hu.kleatech.jigsaw.utils.Utils.*;
 import java.util.*;
 import static hu.kleatech.jigsaw.controller.ControllerUtils.*;
+import java.io.IOException;
 import java.util.stream.Collectors;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 
@@ -27,6 +28,7 @@ public class MainController {
     @Autowired CompetitionService competitionService;
     @Autowired ParticipantService participantService;
     @Autowired TeamService teamService;
+    @Autowired TemplateLoaderService templateLoaderService;
     EngineProvider engineProvider;
 
     @org.springframework.context.event.EventListener(ApplicationReadyEvent.class)
@@ -49,20 +51,18 @@ public class MainController {
     }
 
     @GetMapping("/getEventGroupFragment/{eventGroupId}")
-    public String getEventGroupFragment(Model model, @PathVariable("eventGroupId") Long eventGroupId) {
+    public String getEventGroupFragment(Model model, @PathVariable("eventGroupId") Long eventGroupId) throws IOException {
         EventGroup eventGroupSelected = eventGroupService.get(eventGroupId);
         model.addAttribute("eventGroupSelected", eventGroupSelected);
+        templateLoaderService.loadTemplates(eventGroupSelected.getName());
         return eventGroupSelected.getTemplate() + " :: fragment";
     }
-    
-    //@ModelAttribute("eventSelected")
-    //public Long eventSelectedSessionScopedAttribute(){ return null; }
     
     @GetMapping("/getEventFragment/{eventId}")
     public String getEventFragment(Model model, @PathVariable("eventId") Long eventId) {
         Event eventSelected = eventService.get(eventId);
         model.addAttribute("eventSelected", eventSelected);
-        model.addAttribute("teams", teamService.getAll());
+        model.addAttribute("teams", teamService.getAll().stream().filter(t -> t.getAssociatedEventGroup().equals(eventSelected.getEventGroup())).collect(Collectors.toList()));
         return eventSelected.getTemplate() + " :: fragment";
     }
     @GetMapping("/getCompetitionFragment/{compId}")

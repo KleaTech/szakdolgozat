@@ -1,24 +1,23 @@
 package hu.kleatech.jigsaw;
 
 import hu.kleatech.jigsaw.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import hu.kleatech.jigsaw.scripting.EngineProvider;
 import hu.kleatech.jigsaw.service.interfaces.*;
-
+import static hu.kleatech.jigsaw.utils.Constants.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.time.LocalDate;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
-import static hu.kleatech.jigsaw.utils.Utils.*;
-import hu.kleatech.jigsaw.scripting.EngineProvider;
 
 @SpringBootApplication
 @Configuration
@@ -66,15 +65,19 @@ public class MainApplication implements ApplicationRunner {
         @Autowired ManifestHandlerService manifestHandlerService;
 
 	@Override
-	public void run(ApplicationArguments args) throws Exception {
+	public void run(ApplicationArguments args) throws Exception {}
+        
+        @EventListener(ApplicationReadyEvent.class)
+        @Order(10)
+        void runAtReady() {
             EventGroup eventGroup = eventGroupService.getAll().get(0);
-		Team team1 = teamService.add("Avasi", "teamFragment_generated", eventGroup, null);
-			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, "participantFragment_generated", null);
-		Team team2 = teamService.add("Diósgyőri", "teamFragment_generated", eventGroup, null);
-			participantService.add("Kovács István", LocalDate.now().minusYears(20), Sex.MALE, team2, "participantFragment_generated", null);
-			participantService.add("Tóth Noémi", LocalDate.now().minusYears(21), Sex.FEMALE, team2, "participantFragment_generated", null);
-                Team team3 = teamService.add("Jezsuita", "teamFragment_generated", eventGroup, null);
-                        participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, "participantFragment_generated", null);
-                        participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, "participantFragment_generated", null);
-	}
+		Team team1 = teamService.add("Avasi", TEAM_FRAGMENT, eventGroup, null);
+			participantService.add("Példa Lajos", LocalDate.now().minusYears(18), Sex.NOT_GIVEN, team1, null);
+		Team team2 = teamService.add("Diósgyőri", TEAM_FRAGMENT, eventGroup, null);
+			participantService.add("Kovács István", LocalDate.now().minusYears(20), Sex.MALE, team2, null);
+			participantService.add("Tóth Noémi", LocalDate.now().minusYears(21), Sex.FEMALE, team2, null);
+                Team team3 = teamService.add("Jezsuita", TEAM_FRAGMENT, eventGroup, null);
+                        participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, null);
+                        participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, null);
+        }
 }

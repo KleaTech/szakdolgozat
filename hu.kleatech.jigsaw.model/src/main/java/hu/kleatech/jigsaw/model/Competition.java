@@ -3,6 +3,7 @@ package hu.kleatech.jigsaw.model;
 import static hu.kleatech.jigsaw.utils.StringUtils.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -20,7 +21,7 @@ public class Competition implements Serializable {
 
     @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
     @Column(name = "rounds_competition")
-    private List<Round> rounds;
+    private List<Round> rounds = Collections.EMPTY_LIST;
 
     @Transient
     private List<Team> teams;
@@ -62,7 +63,7 @@ public class Competition implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Competition)) return false;
         Competition that = (Competition) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(getId(), that.getId());
     }
     @Override
     public int hashCode() { return Objects.hash(id); }

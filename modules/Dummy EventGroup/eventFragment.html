@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>eventGroupFragment_generated</title>
+</head>
+<body>
+<th:block th:fragment="fragment">
+		<h2>Team</h2>
+		<div class="input-group">
+			<select id="teamSelector" class="form-control">
+				<th:block th:each="team : ${teams}">
+					<option th:value="${team.id}" th:text="${team.name}"></option>
+				</th:block>
+			</select>
+			<span class="form-control-btn">
+				<button class="btn btn-primary" th:onclick="${js.func('retrieveTeam').argObj(js.queryById('teamSelector').func('val'))}">Select</button>
+			</span>
+		</div>
+</th:block>
+</body>
+</html>

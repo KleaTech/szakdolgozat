@@ -26,7 +26,7 @@ class ObjectTransferHandler {
         public void setInfos(Properties infos) { this.infos = infos; }
                
         public Participant toEntity(Team team) {
-            return new Participant(name, birthDate, Sex.valueOf(sex), team, "participantFragment_generated", infos);
+            return new Participant(name, birthDate, Sex.valueOf(sex), team, infos);
         }
     }
 }

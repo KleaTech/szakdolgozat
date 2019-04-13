@@ -11,26 +11,24 @@ import java.util.stream.Collectors;
 import hu.kleatech.jigsaw.service.serialization.Manifest;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interfaces.ManifestHandlerService {
 
     @Autowired EventGroupService eventGroupService;
     @Autowired EventService eventService;
     @Autowired CompetitionService competitionService;
-        
-    private final Map<String, String> cachedTeamFragments = Collections.synchronizedMap(new HashMap<>(3));
-    private final Map<String, String> cachedParticipantFragments = Collections.synchronizedMap(new HashMap<>(3));
-    private volatile String lastLoadedManifest = "";
     
     @Override
     public void loadTemplates(String eventGroupName) throws IOException {
@@ -39,10 +37,11 @@ public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interface
     }
     
     @Override
-    public void copyTemplates(String eventGroupName) throws IOException {
+    public synchronized void copyTemplates(String eventGroupName) throws IOException {
         Arrays.stream(USER_DIR.resolve(MODULES_DIR_NAME).resolve(LOADED_MODULES_DIR_NAME).toFile().listFiles()).forEach(File::delete);
         for(File f : USER_DIR.resolve(MODULES_DIR_NAME).resolve(eventGroupName).toFile().listFiles()) {
-            if (f.getName().endsWith("html")) Files.copy(f.toPath(), USER_DIR.resolve(MODULES_DIR_NAME).resolve(LOADED_MODULES_DIR_NAME));
+            Path target = USER_DIR.resolve(MODULES_DIR_NAME).resolve(LOADED_MODULES_DIR_NAME).resolve(f.getName());
+            if (f.getName().endsWith("html")) Files.copy(f.toPath(), target);
         }
     }
     
@@ -56,27 +55,6 @@ public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interface
                 competitionService.add(event, c.getName(), c.getTemplate(), null);
             }
         }
-        getTeamFragment(eventGroupName);
-        getParticipantFragment(eventGroupName);
-        lastLoadedManifest = eventGroupName;
-    }
-    
-    @Override
-    public String getTeamFragment(String eventGroupName) throws IOException {
-        if (!cachedTeamFragments.containsKey(eventGroupName)) loadCache(eventGroupName);
-        return cachedTeamFragments.get(eventGroupName);
-    }
-    
-    @Override
-    public String getParticipantFragment(String eventGroupName) throws IOException {
-        if (!cachedParticipantFragments.containsKey(eventGroupName)) loadCache(eventGroupName);
-        return cachedParticipantFragments.get(eventGroupName);
-    }
-    
-    @Override
-    public void invalidateCache() {
-        cachedTeamFragments.clear();
-        cachedParticipantFragments.clear();
     }
     
     @Override
@@ -89,18 +67,12 @@ public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interface
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @EventListener(ApplicationStartedEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
+    @Order(5)
     @Override
     public void refreshNow() throws IOException {
-        invalidateCache();
         List<String> manifests = findManifests();
         for(String m : manifests) loadManifest(m);
-    }
-
-    private void loadCache(String eventGroupName) throws IOException {
-        Manifest manifest = parseManifest(eventGroupName);
-        cachedTeamFragments.put(eventGroupName, manifest.getTeamFragment());
-        cachedParticipantFragments.put(eventGroupName, manifest.getParticipantFragment());
     }
     
     private Manifest parseManifest(String eventGroupName) throws IOException {

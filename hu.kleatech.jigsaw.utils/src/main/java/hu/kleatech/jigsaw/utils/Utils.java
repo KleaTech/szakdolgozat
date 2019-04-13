@@ -37,4 +37,7 @@ public final class Utils {
             return null;
         }
     }
+    public static <T> void DoNotOptimiseOut(T... obj) {
+        for(T o : obj) try { obj.wait(0, 1); } catch (Exception e) {}
+    }
 }

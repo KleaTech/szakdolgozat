@@ -70,7 +70,7 @@ public class Team implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Team)) return false;
         Team team = (Team) o;
-        return Objects.equals(id, team.id);
+        return Objects.equals(getId(), team.getId());
     }
     @Override
     public int hashCode() { return Objects.hash(id); }

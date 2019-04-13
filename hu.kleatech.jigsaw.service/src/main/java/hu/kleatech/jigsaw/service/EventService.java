@@ -3,6 +3,7 @@ package hu.kleatech.jigsaw.service;
 import hu.kleatech.jigsaw.model.Event;
 import hu.kleatech.jigsaw.model.EventGroup;
 import hu.kleatech.jigsaw.persistence.EventRepository;
+import static hu.kleatech.jigsaw.utils.Utils.DoNotOptimiseOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,7 +16,9 @@ public class EventService implements hu.kleatech.jigsaw.service.interfaces.Event
 
     @Override
     public Event add(EventGroup eventGroup, String name, String template, Properties infos) {
-        return eventRepository.save(new Event(eventGroup, name, template, infos));
+        return eventRepository.findAll().stream()
+                .filter(e -> e.getName().equals(name) && e.getEventGroup().equals(eventGroup))
+                .findFirst().orElseGet(() -> eventRepository.save(new Event(eventGroup, name, template, infos)));
     }
 
     @Override

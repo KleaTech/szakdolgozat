@@ -59,8 +59,8 @@ public class Event implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Event)) return false;
-        Event event = (Event) o;
-        return Objects.equals(id, event.id);
+        Event that = (Event) o;
+        return Objects.equals(getId(), that.getId());
     }
     @Override
     public int hashCode() { return Objects.hash(id); }

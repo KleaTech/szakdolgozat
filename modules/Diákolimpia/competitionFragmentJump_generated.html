@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="fragment" class="revert">
+    <div th:replace="roundModalAddJump_generated :: fragment"></div>
+<table class="table" th:onload="${'var compSelectedId = ' + compSelected.id + ';'}">
+    <thead>
+    <tr>
+        <th colspan="5">Jump (m)</th>
+        <th colspan="2">Result (m)</th>
+    </tr>
+    <tr>
+        <th colspan="4"></th>
+        <th>Valid</th>
+        <th colspan="3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="participant : ${teamSelected.participants}">
+		<th:block th:with="round=${participant.rounds.size()>0 ? participant.rounds.get(0) : null}">
+			<tr th:if="${round==null || round.values.size()>2}">
+				<td rowspan="2" class="h5" th:text="${participant.name}"></td>
+				<th:block th:if="${round!=null}">
+					<td th:text="${round.values.get(0)}"></td>
+					<td th:text="${round.values.get(1)}"></td>
+					<td th:text="${round.values.get(2)}"></td>
+					<td th:text="${#numbers.formatDecimal(round.preresults(prefunc)?.get(0), 0, 'COMMA', 2, 'POINT')}"></td>
+					<td th:text="${#numbers.formatDecimal(round.result(func), 0, 'COMMA', 2, 'POINT')}" rowspan="2" class="align-middle"></td>
+					<td rowspan="2">
+						<button type="button" class="btn btn-primary" th:onclick="${'jQuery.' + js.func('get').argStr('/deleteRound/' + round.id).argObj('function(html) {retrieveCompetition(' + compSelected.id + ')}')}">Clear</button>
+					</td>
+				</th:block>
+					<td rowspan="2">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#roundModalAddJump" 
+							th:onclick="${js.queryById('formRound').func('attr').argStr('addr').argStr(round==null ? '/addRound/' + compSelected.id + '/' + participant.id : '/editRound/' + round.id)}">Set</button>
+					</td>
+			</tr>
+			<tr th:if="${round!=null && round.values.size()>5}">
+				<td th:text="${round.values.get(3)}"></td>
+				<td th:text="${round.values.get(4)}"></td>
+				<td th:text="${round.values.get(5)}"></td>
+				<td th:text="${#numbers.formatDecimal(round.preresults(prefunc)?.get(1), 0, 'COMMA', 2, 'POINT')}"></td>
+			</tr>
+		</th:block>
+    </th:block>
+    </tbody>
+</table>
+</div>
+</body>
+</html>

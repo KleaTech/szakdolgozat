@@ -16,8 +16,8 @@ public class ParticipantService implements hu.kleatech.jigsaw.service.interfaces
     @Autowired ParticipantRepository participantRepository;
 
     @Override
-    public Participant add(String name, LocalDate birthDate, Sex sex, Team team, String template, Properties infos) {
-        return participantRepository.save(new Participant(name, birthDate, sex, team, template, infos));
+    public Participant add(String name, LocalDate birthDate, Sex sex, Team team, Properties infos) {
+        return participantRepository.save(new Participant(name, birthDate, sex, team, infos));
     }
 
     @Override

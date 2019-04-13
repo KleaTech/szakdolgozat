@@ -7,6 +7,7 @@ public class Constants {
     public static final String MODULES_DIR_NAME = "modules";
     public static final Path USER_DIR;
     public static final String LOADED_MODULES_DIR_NAME = "loadedTemplates";
+    public static final String TEAM_FRAGMENT = "teamFragment";
     
     static {
         Path path = Paths.get(System.getProperty("user.dir"));

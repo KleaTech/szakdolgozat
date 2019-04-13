@@ -46,7 +46,7 @@ public class EventGroup implements Serializable{
         if (this == o) return true;
         if (!(o instanceof EventGroup)) return false;
         EventGroup that = (EventGroup) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(getId(), that.getId());
     }
     @Override
     public int hashCode() { return Objects.hash(id); }

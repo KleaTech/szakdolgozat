@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>fragment</title>
+</head>
+<body>
+<th:block th:fragment="fragment">
+	<div class="col-12">
+		<ul class="nav nav-tabs">
+			<li class="nav-item" th:each="competition : ${eventSelected.competitions}">
+				<a class="nav-link" href="#" th:onclick="${'event.preventDefault(); ' + js.func('retrieveCompetition').argObj(competition.id)}" th:text="${competition.name}"></a>
+			</li>
+		</ul>
+	</div>
+</th:block>
+</body>
+</html>

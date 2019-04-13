@@ -5,6 +5,8 @@ import hu.kleatech.jigsaw.model.Participant;
 import hu.kleatech.jigsaw.service.interfaces.EventGroupService;
 import hu.kleatech.jigsaw.service.interfaces.ParticipantService;
 import hu.kleatech.jigsaw.service.interfaces.TeamService;
+import hu.kleatech.jigsaw.service.interfaces.TemplateLoaderService;
+import static hu.kleatech.jigsaw.utils.Constants.TEAM_FRAGMENT;
 import hu.kleatech.jigsaw.utils.StaticMap;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ public class TeamController {
     @Autowired TeamService teamService;
     @Autowired ParticipantService participantService;
     @Autowired EventGroupService eventGroupService;
+    @Autowired TemplateLoaderService templateLoaderService;
     
     @GetMapping("/getEventGroup")
     public String getEventGroup(Model model) {
@@ -38,7 +41,8 @@ public class TeamController {
     @PostMapping("/addTeam/{associatedEventGroupId}")
     @ResponseBody
     public String addTeam(Model model, @RequestParam String name, @PathVariable Long associatedEventGroupId) {
-        teamService.add(name, "teamFragment_generated", eventGroupService.get(associatedEventGroupId), null);
+        EventGroup eventGroup = eventGroupService.get(associatedEventGroupId);
+        teamService.add(name, TEAM_FRAGMENT, eventGroup, null);
         return "SUCCESS";
     }
     

@@ -3,6 +3,7 @@ package hu.kleatech.jigsaw.service;
 import hu.kleatech.jigsaw.model.Competition;
 import hu.kleatech.jigsaw.model.Event;
 import hu.kleatech.jigsaw.persistence.CompetitionRepository;
+import static hu.kleatech.jigsaw.utils.Utils.DoNotOptimiseOut;
 import java.util.List;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ public class CompetitionService implements hu.kleatech.jigsaw.service.interfaces
 
     @Override
     public Competition add(Event event, String name, String template, Properties infos) {
-        return competitionRepository.save(new Competition(event, name, template, infos));
+        return competitionRepository.findAll().stream()
+                .filter(c -> c.getName().equals(name) && c.getEvent().equals(event))
+                .findFirst().orElseGet(() -> competitionRepository.save(new Competition(event, name, template, infos)));
     }
 
     @Override
