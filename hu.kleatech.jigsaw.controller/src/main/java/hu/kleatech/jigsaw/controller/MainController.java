@@ -16,6 +16,7 @@ import static hu.kleatech.jigsaw.controller.ControllerUtils.*;
 import java.io.IOException;
 import java.util.stream.Collectors;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.web.context.request.async.DeferredResult;
 
 @Controller
 @Transactional
@@ -29,6 +30,7 @@ public class MainController {
     @Autowired ParticipantService participantService;
     @Autowired TeamService teamService;
     @Autowired TemplateLoaderService templateLoaderService;
+    @Autowired ManifestHandlerService manifestHandlerService;
     EngineProvider engineProvider;
 
     @org.springframework.context.event.EventListener(ApplicationReadyEvent.class)
@@ -40,8 +42,16 @@ public class MainController {
     public String index(Model model, Locale locale) {
         model.addAttribute("username", "Béla");
         model.addAttribute("datetime", new Date());
-        model.addAttribute("eventGroups", eventGroupService.getAll());
+        model.addAttribute("eventGroups", eventGroupService.getAll().stream().filter(e -> manifestHandlerService.findManifests().contains(e.getName())).collect(Collectors.toList()));
         return "index";
+    }
+    
+    @GetMapping("/registerListener")
+    @ResponseBody
+    public DeferredResult<String> registerListener() {
+        DeferredResult<String> deferredResult = new DeferredResult<>(3600_0000l, "TIMEOUT");
+        manifestHandlerService.registerListener(deferredResult);
+        return deferredResult;
     }
     
     @GetMapping("/getHomeFragment")

@@ -3,25 +3,24 @@ package hu.kleatech.jigsaw.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.kleatech.jigsaw.model.*;
 import hu.kleatech.jigsaw.service.serialization.*;
-import java.util.List;
 import static hu.kleatech.jigsaw.utils.Constants.*;
 import java.io.File;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import hu.kleatech.jigsaw.service.serialization.Manifest;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.*;
+import static java.nio.file.StandardWatchEventKinds.*;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.async.DeferredResult;
 
 @Service
 public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interfaces.ManifestHandlerService {
@@ -62,17 +61,44 @@ public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interface
         return Arrays.stream(USER_DIR.resolve(MODULES_DIR_NAME).toFile().listFiles(File::isDirectory)).map(File::getName).filter(d -> !d.equals(LOADED_MODULES_DIR_NAME)).collect(Collectors.toList());
     }
     
+    private volatile boolean fileSystemWatchRunning = false;
+    @EventListener(ApplicationReadyEvent.class)
+    @Order(7)
     @Override
-    public void startFileSystemWatch() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void startFileSystemWatch() throws IOException {
+        if (fileSystemWatchRunning) return;
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        USER_DIR.resolve(MODULES_DIR_NAME).register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
+        new Thread(() -> {
+            fileSystemWatchRunning = true;
+            WatchKey key;
+            try {
+                while ((key = watchService.take()) != null) {
+                    key.pollEvents();
+                    refreshNow();
+                    key.reset();
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                fileSystemWatchRunning = false;
+            }
+        }, "WatchService").start();
     }
 
+    private final LinkedList<DeferredResult<String>> registeredListeners = new LinkedList<>();
+    @Override
+    public void registerListener(DeferredResult<String> listener) {
+        registeredListeners.add(listener);
+    }    
+    
     @EventListener(ApplicationReadyEvent.class)
     @Order(5)
     @Override
     public void refreshNow() throws IOException {
         List<String> manifests = findManifests();
         for(String m : manifests) loadManifest(m);
+        System.out.println("refreshed");
+        registeredListeners.forEach(l -> l.setResult("EVENT"));
     }
     
     private Manifest parseManifest(String eventGroupName) throws IOException {

@@ -8,6 +8,8 @@ module hu.kleatech.jigsaw.service {
     opens hu.kleatech.jigsaw.service to spring.core;
     opens hu.kleatech.jigsaw.service.interfaces to spring.core;
     requires spring.data.commons;
+    requires spring.web;
+    requires spring.core;
     
     requires hu.kleatech.jigsaw.persistence;
     requires hu.kleatech.jigsaw.utils;

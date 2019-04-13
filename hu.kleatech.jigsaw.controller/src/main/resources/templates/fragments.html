@@ -21,6 +21,15 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="position: absolute; top: 5vmin; right: 5vmin; z-index: 100">
+                <div class="toast-header">
+                  <strong class="mr-auto">Available modules have changed</strong>
+                </div>
+                <div class="toast-body">
+                    <button class="btn btn-primary" onclick="location.reload(true)">Refresh</button>
+                </div>
+            </div>
         </nav>
 
         <div class="container" th:with="eventGroups=${eventGroups}" th:fragment="home" onload="$(caller).parent().attr("class", "nav-item")">
