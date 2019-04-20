@@ -1,6 +1,5 @@
 package hu.kleatech.jigsaw.scripting;
 
-import hu.kleatech.jigsaw.api.Dispatcher;
 import javax.script.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 import hu.kleatech.jigsaw.api.MyScriptException;
 
-public class Engine implements hu.kleatech.jigsaw.api.EngineProvider.Engine {
+public final class Engine implements hu.kleatech.jigsaw.api.EngineProvider.Engine {
 
     private final Path scriptPath;
     private final ScriptEngineManager engineManager = new ScriptEngineManager();

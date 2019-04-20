@@ -1,12 +1,16 @@
 package hu.kleatech.jigsaw;
 
+import hu.kleatech.jigsaw.api.Dispatcher;
 import hu.kleatech.jigsaw.model.*;
 import hu.kleatech.jigsaw.scripting.EngineProvider;
+import hu.kleatech.jigsaw.scripting.SecureEngineProvider;
 import hu.kleatech.jigsaw.service.interfaces.*;
 import static hu.kleatech.jigsaw.utils.Constants.*;
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +30,7 @@ public class MainApplication implements ApplicationRunner {
     @Autowired SpringTemplateEngine templateEngine;
     @EventListener(ApplicationStartedEvent.class)
     public void load() {
-        EngineProvider.load();
+        SecureEngineProvider.load();
         setModuleTemplateResolver();
     }
     
@@ -65,7 +69,11 @@ public class MainApplication implements ApplicationRunner {
         @Autowired ManifestHandlerService manifestHandlerService;
 
 	@Override
-	public void run(ApplicationArguments args) throws Exception {}
+	public void run(ApplicationArguments args) throws Exception {
+            System.out.println("Reading script");
+            System.out.println(Dispatcher.getEngineProvider().getEngine(USER_DIR.resolve(MODULES_DIR_NAME).resolve("Diákolimpia")).preresults("competitionFragmentJump_generated_pre.js").apply(List.of(1d,2d,3d,4d,5d,6d)));
+            System.out.println(Dispatcher.getEngineProvider().getEngine(USER_DIR.resolve(MODULES_DIR_NAME).resolve("Diákolimpia")).preresults("competitionFragmentOther_generated.js").apply(List.of(1d,2d,3d)));
+        }
         
         @EventListener(ApplicationReadyEvent.class)
         @Order(10)

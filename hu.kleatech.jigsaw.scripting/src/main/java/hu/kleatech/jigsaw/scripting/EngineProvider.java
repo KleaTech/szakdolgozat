@@ -3,9 +3,9 @@ package hu.kleatech.jigsaw.scripting;
 import hu.kleatech.jigsaw.api.Dispatcher;
 import java.nio.file.Path;
 
-public class EngineProvider implements hu.kleatech.jigsaw.api.EngineProvider {
+public final class EngineProvider implements hu.kleatech.jigsaw.api.EngineProvider {
 
-    public static final void load() {
+    public static void load() {
         Dispatcher.setEngineProvider(new EngineProvider());
     }
     
