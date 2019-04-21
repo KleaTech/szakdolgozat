@@ -4,10 +4,9 @@ import hu.kleatech.jigsaw.api.MyScriptException;
 import java.io.FileReader;
 import java.util.List;
 import java.util.function.Function;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
+import javax.script.*;
 
+//Public because of custom classloader
 public class EngineInner {
     public static Function<List<Double>, List<Double>> preresults(ScriptEngine engine, FileReader file) throws MyScriptException, ClassCastException {
         try {

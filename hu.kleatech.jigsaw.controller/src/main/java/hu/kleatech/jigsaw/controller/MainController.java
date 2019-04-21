@@ -14,6 +14,7 @@ import static hu.kleatech.jigsaw.utils.Utils.*;
 import java.util.*;
 import static hu.kleatech.jigsaw.controller.ControllerUtils.*;
 import java.io.IOException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -86,6 +87,7 @@ public class MainController {
         model.addAttribute("pojo", new StaticMap<String>());
         model.addAttribute("prefunc", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).preresults(scriptName(compSelected, ResultType.PRERESULT))));
         model.addAttribute("func", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
+        //System.out.println("Func result: " + TryOrNull(IndexOutOfBoundsException.class, () -> ((Function<List<Double>, Double>)model.asMap().get("func")).apply(compSelected.getRounds().get(0).getValues())));
         return compSelected.getTemplate() + " :: fragment";
     }
     @GetMapping("/getTeamFragment/{teamId}")

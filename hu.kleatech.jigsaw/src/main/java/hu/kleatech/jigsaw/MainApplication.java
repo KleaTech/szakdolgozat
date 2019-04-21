@@ -2,13 +2,11 @@ package hu.kleatech.jigsaw;
 
 import hu.kleatech.jigsaw.api.Dispatcher;
 import hu.kleatech.jigsaw.model.*;
-import hu.kleatech.jigsaw.scripting.EngineProvider;
 import hu.kleatech.jigsaw.scripting.SecureEngineProvider;
 import hu.kleatech.jigsaw.service.interfaces.*;
 import static hu.kleatech.jigsaw.utils.Constants.*;
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

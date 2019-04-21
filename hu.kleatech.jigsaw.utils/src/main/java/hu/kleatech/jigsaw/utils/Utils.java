@@ -2,7 +2,7 @@ package hu.kleatech.jigsaw.utils;
 
 import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.function.Supplier;
 
 public final class Utils {
     @FunctionalInterface
@@ -33,6 +33,25 @@ public final class Utils {
             return func.action();
         }
         catch (Exception e) {
+            System.out.println("Try catched " + e.getMessage());
+            return null;
+        }
+    }
+    public static <E extends Exception> void Try(Class<E> exClass, VoidExceptionFunction func) {
+        try {
+            func.action();
+        }
+        catch (Exception e) {
+            if (!(e.getClass().isAssignableFrom(exClass))) throw new RuntimeException("Try exception, see inner", e);
+            System.out.println("Try catched " + e.getMessage());
+        }
+    }
+    public static <T, E extends Exception> T TryOrNull(Class<E> exClass, GenericExceptionFunction<T> func) {
+        try {
+            return func.action();
+        }
+        catch (Exception e) {
+            if (!(e.getClass().isAssignableFrom(exClass))) throw new RuntimeException("Try exception, see inner", e);;
             System.out.println("Try catched " + e.getMessage());
             return null;
         }
