@@ -1,8 +1,10 @@
 package hu.kleatech.jigsaw.scripting.inner;
 
+import hu.kleatech.jigsaw.api.Dispatcher;
 import hu.kleatech.jigsaw.api.MyScriptException;
 import java.io.FileReader;
 import java.util.List;
+import java.util.function.DoubleSupplier;
 import java.util.function.Function;
 import javax.script.*;
 
@@ -27,6 +29,20 @@ public class EngineInner {
         }
         catch (ScriptException e) {
             throw new MyScriptException(e.getMessage(), e.getFileName(), e.getLineNumber(), e.getColumnNumber());
+        }
+    }
+    
+    public static void testPutAndGet(ScriptEngine engine) throws MyScriptException, ClassCastException {
+        engine.put("statistics", Dispatcher.getStatistics());
+        try {
+            engine.eval("var array = [1,2,3,4,5];" +
+                    "function getAsDouble() { return statistics.getMedian().apply(Java.to(array, 'double[]')); }");
+            Invocable inv = (Invocable) engine;
+            DoubleSupplier r = inv.getInterface(DoubleSupplier.class);
+            System.out.println(Double.isFinite(r.getAsDouble())?"Test successful":"Test failed");
+        }
+        catch (ScriptException e) {
+            System.out.println("Test failed");
         }
     }
 }

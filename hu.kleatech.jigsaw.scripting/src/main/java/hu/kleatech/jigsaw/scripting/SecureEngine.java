@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.DoubleSupplier;
 import java.util.function.Function;
 import javax.script.*;
 
@@ -31,9 +32,9 @@ public class SecureEngine implements hu.kleatech.jigsaw.api.EngineProvider.Engin
     @Override
     public Function<List<Double>, List<Double>> preresults(String filename) throws FileNotFoundException, MyScriptException, ClassCastException {
         try {
-            IsolatedThread isolatedThread = new IsolatedThread(RequestType.PRERESULTS, resolveReader(filename), resolveEngine(filename));
+            IsolatedThread isolatedThread = new IsolatedThread(RequestType.PRERESULTS, resolveEngine(filename), resolveReader(filename));
             isolatedThread.start();
-            return isolatedThread.preresults.get(1, TimeUnit.HOURS);
+            return isolatedThread.preresults.get(1, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             throw new MyScriptException("Timeout while running external script");
         } catch (InterruptedException | ExecutionException e) {
@@ -46,9 +47,23 @@ public class SecureEngine implements hu.kleatech.jigsaw.api.EngineProvider.Engin
     @Override
     public Function<List<Double>, Double> result(String filename) throws FileNotFoundException, MyScriptException, ClassCastException {
         try {
-            IsolatedThread isolatedThread = new IsolatedThread(RequestType.RESULT, resolveReader(filename), resolveEngine(filename));
+            IsolatedThread isolatedThread = new IsolatedThread(RequestType.RESULT, resolveEngine(filename), resolveReader(filename));
             isolatedThread.start();
             return isolatedThread.result.get(1, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            throw new MyScriptException("Timeout while running external script");
+        } catch (InterruptedException | ExecutionException e) {
+            throw new MyScriptException("Interruped while running external script: " + e.getMessage());
+        } catch (ClassCastException e) {
+            throw new MyScriptException(e.getMessage());
+        }
+    }
+    
+    public DoubleSupplier test() throws MyScriptException, ClassCastException {
+        try {
+            IsolatedThread isolatedThread = new IsolatedThread(RequestType.TEST, engineManager.getEngineByName("nashorn"));
+            isolatedThread.start();
+            return isolatedThread.test.get(1, TimeUnit.HOURS);
         } catch (TimeoutException e) {
             throw new MyScriptException("Timeout while running external script");
         } catch (InterruptedException | ExecutionException e) {

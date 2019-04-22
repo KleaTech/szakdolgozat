@@ -1,19 +1,10 @@
 package hu.kleatech.jigsaw.scripting.inner;
 
-import hu.kleatech.jigsaw.api.Statistics;
 import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.security.Permission;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class MySecurityManager extends SecurityManager {
-    static final Set<String> allowedClassNames = Set.of(Statistics.class.getName());
-    static final Set<String> requiredJavaInnerPackages = Set.of("java.lang", "java.io", "java.lang.invoke");
-    static final Set<String> allowedOwnPackages = Set.of("hu.kleatech.jigsaw.scripting.inner");
-    static final Set<String> allowedPackages = Stream.concat(requiredJavaInnerPackages.stream(), allowedOwnPackages.stream()).collect(Collectors.toSet());
-    
     private volatile ThreadLocal<Boolean> enabled = null;
     private final Object secret;
     MySecurityManager(Object pass) { 
@@ -36,10 +27,6 @@ class MySecurityManager extends SecurityManager {
     }
     private void log(String msg, Object... cause) {
         if (enabled.get()) {
-            //These packages are neccessary, otherwise StackOwerflowError is thrown
-            if (msg.equals("Package access") && allowedPackages.contains(cause[0].toString())) {
-                return; //Must allow these packages or StackOverflowError is thrown
-            }
             System.out.println(concat("Allowed " + msg, cause));
         }
     }
@@ -50,7 +37,7 @@ class MySecurityManager extends SecurityManager {
     @Override public void checkSecurityAccess(String target)                    { deny("Security access", target); }
     @Override public void checkSetFactory()                                     { deny("Set factory"); }
     @Override public void checkPackageDefinition(String pkg)                    { deny("Package definition", pkg); }
-    @Override public void checkPackageAccess(String pkg)                        { log("Package access", pkg); }
+    @Override public void checkPackageAccess(String pkg)                        { allow("Package access", pkg); }
     @Override public void checkPrintJobAccess()                                 { deny("Print job access"); }
     @Override public void checkPropertyAccess(String key)                       { log("Property access", key); }
     @Override public void checkPropertiesAccess()                               { deny("Properties access"); }
