@@ -1,12 +1,15 @@
 package hu.kleatech.jigsaw;
 
+import hu.kleatech.jigsaw.api.Dispatcher;
 import hu.kleatech.jigsaw.model.*;
+import hu.kleatech.jigsaw.scripting.SecureEngine;
 import hu.kleatech.jigsaw.scripting.SecureEngineProvider;
 import hu.kleatech.jigsaw.service.interfaces.*;
 import static hu.kleatech.jigsaw.utils.Constants.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -82,6 +85,6 @@ public class MainApplication implements ApplicationRunner {
             Team team3 = teamService.add("Jezsuita", TEAM_FRAGMENT, eventGroup, null);
                     participantService.add("Kovács Mátyás", LocalDate.now().minusYears(17), Sex.MALE, team3, null);
                     participantService.add("Fazekas Ibolya", LocalDate.now().minusYears(18), Sex.FEMALE, team3, null);
-        //System.out.println(((SecureEngine)Dispatcher.getEngineProvider().getEngine(USER_DIR.resolve(MODULES_DIR_NAME).resolve("Diákolimpia"))).test());
+        //System.out.println(((SecureEngine)Dispatcher.getEngineProvider().getEngine(USER_DIR.resolve(MODULES_DIR_NAME).resolve("Diákolimpia"))).test().getAsDouble());
     }
 }

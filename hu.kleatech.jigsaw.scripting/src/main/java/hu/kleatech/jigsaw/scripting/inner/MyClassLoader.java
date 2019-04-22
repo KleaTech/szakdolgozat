@@ -18,12 +18,14 @@ class MyClassLoader extends ClassLoader {
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
         //If the class is precomiled by the JDK and is whitelisted we can load it here
-        if (Class.forName(name).getPackageName().startsWith("java") || 
+        System.out.println("Loading " + name);
+        String pkg = Class.forName(name).getPackageName();
+        if (pkg.startsWith("java") || 
             allowedClassNames.contains(name) || 
-            allowedPackages.contains(Class.forName(name).getPackageName())) {
+            allowedPackages.contains(pkg)) {
             return super.loadClass(name);
         } else if (deniedClassNames.contains(name) ||
-                   deniedPackages.contains(Class.forName(name).getPackageName())) {
+                   deniedPackages.contains(pkg)) {
             throw new SecurityException("Class denied: " + name);
         }
         //If the class is not on the whitelist we load it manually

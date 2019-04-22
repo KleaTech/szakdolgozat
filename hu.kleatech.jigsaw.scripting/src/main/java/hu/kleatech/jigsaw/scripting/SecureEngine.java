@@ -31,11 +31,12 @@ public class SecureEngine implements hu.kleatech.jigsaw.api.EngineProvider.Engin
 
     @Override
     public Function<List<Double>, List<Double>> preresults(String filename) throws FileNotFoundException, MyScriptException, ClassCastException {
+        IsolatedThread<Function<List<Double>, List<Double>>> isolatedThread = new IsolatedThread<>(RequestType.PRERESULTS, resolveEngine(filename), resolveReader(filename));
         try {
-            IsolatedThread isolatedThread = new IsolatedThread(RequestType.PRERESULTS, resolveEngine(filename), resolveReader(filename));
             isolatedThread.start();
-            return isolatedThread.preresults.get(1, TimeUnit.SECONDS);
+            return isolatedThread.result.get(5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
+            isolatedThread.interrupt();
             throw new MyScriptException("Timeout while running external script");
         } catch (InterruptedException | ExecutionException e) {
             throw new MyScriptException("Interruped while running external script: " + e.getMessage());
@@ -46,11 +47,12 @@ public class SecureEngine implements hu.kleatech.jigsaw.api.EngineProvider.Engin
 
     @Override
     public Function<List<Double>, Double> result(String filename) throws FileNotFoundException, MyScriptException, ClassCastException {
+        IsolatedThread<Function<List<Double>, Double>> isolatedThread = new IsolatedThread<>(RequestType.RESULT, resolveEngine(filename), resolveReader(filename));
         try {
-            IsolatedThread isolatedThread = new IsolatedThread(RequestType.RESULT, resolveEngine(filename), resolveReader(filename));
             isolatedThread.start();
-            return isolatedThread.result.get(1, TimeUnit.SECONDS);
+            return isolatedThread.result.get(5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
+            isolatedThread.interrupt();
             throw new MyScriptException("Timeout while running external script");
         } catch (InterruptedException | ExecutionException e) {
             throw new MyScriptException("Interruped while running external script: " + e.getMessage());
@@ -60,11 +62,12 @@ public class SecureEngine implements hu.kleatech.jigsaw.api.EngineProvider.Engin
     }
     
     public DoubleSupplier test() throws MyScriptException, ClassCastException {
+        IsolatedThread<DoubleSupplier> isolatedThread = new IsolatedThread<>(RequestType.TEST, engineManager.getEngineByName("nashorn"));
         try {
-            IsolatedThread isolatedThread = new IsolatedThread(RequestType.TEST, engineManager.getEngineByName("nashorn"));
             isolatedThread.start();
-            return isolatedThread.test.get(1, TimeUnit.HOURS);
+            return isolatedThread.result.get(5, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
+            isolatedThread.interrupt();
             throw new MyScriptException("Timeout while running external script");
         } catch (InterruptedException | ExecutionException e) {
             throw new MyScriptException("Interruped while running external script: " + e.getMessage());

@@ -32,7 +32,7 @@ public class EngineInner {
         }
     }
     
-    public static void testPutAndGet(ScriptEngine engine) throws MyScriptException, ClassCastException {
+    public static DoubleSupplier testPutAndGet(ScriptEngine engine) throws MyScriptException, ClassCastException {
         engine.put("statistics", Dispatcher.getStatistics());
         try {
             engine.eval("var array = [1,2,3,4,5];" +
@@ -40,9 +40,11 @@ public class EngineInner {
             Invocable inv = (Invocable) engine;
             DoubleSupplier r = inv.getInterface(DoubleSupplier.class);
             System.out.println(Double.isFinite(r.getAsDouble())?"Test successful":"Test failed");
+            return r;
         }
         catch (ScriptException e) {
             System.out.println("Test failed");
         }
+        throw new IllegalStateException("Should not be reachable");
     }
 }

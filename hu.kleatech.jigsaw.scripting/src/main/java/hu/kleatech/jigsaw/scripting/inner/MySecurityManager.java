@@ -5,28 +5,33 @@ import java.net.InetAddress;
 import java.security.Permission;
 
 class MySecurityManager extends SecurityManager {
-    private volatile ThreadLocal<Boolean> enabled = null;
+    private volatile InheritableThreadLocal<Boolean> enabled = null;
     private final Object secret;
     MySecurityManager(Object pass) { 
         secret = pass;
-        enabled = new ThreadLocal<Boolean>() {
+        initializeEnabled();
+    }
+    private void initializeEnabled() {
+        enabled = new InheritableThreadLocal<Boolean>() {
             @Override protected Boolean initialValue() { return false; }
             @Override
             public void set(Boolean enabled) { super.set(enabled); }
         };
     }
+    
     void disable(Object pass) {
-        if (pass == secret) enabled.set(false);
+        if (pass == secret) enabled = null;
     }
     void enable() {
+        if (enabled == null) initializeEnabled();
         if (System.getSecurityManager() != this) System.setSecurityManager(this);
         enabled.set(true);
     }
     private void deny(String msg, Object... cause) {
-        if (enabled.get()) throw new SecurityException(msg);
+        if (enabled != null && enabled.get()) throw new SecurityException(msg);
     }
     private void log(String msg, Object... cause) {
-        if (enabled.get()) {
+        if (enabled != null && enabled.get()) {
             System.out.println(concat("Allowed " + msg, cause));
         }
     }
@@ -57,7 +62,7 @@ class MySecurityManager extends SecurityManager {
     @Override public void checkExit(int status)                                 { deny("Exit", status); }
     @Override public void checkAccess(ThreadGroup g)                            { deny("Access", g); }
     @Override public void checkAccess(Thread t)                                 { deny("Access", t); }
-    @Override public void checkCreateClassLoader()                              { log("CreateClassLoader"); }
+    @Override public void checkCreateClassLoader()                              { allow("CreateClassLoader"); }
     
     private static String concat(String msg, Object... cause) {
         String str = msg + ": ";
