@@ -1,15 +1,12 @@
 package hu.kleatech.jigsaw;
 
-import hu.kleatech.jigsaw.api.Dispatcher;
 import hu.kleatech.jigsaw.model.*;
-import hu.kleatech.jigsaw.scripting.SecureEngine;
-import hu.kleatech.jigsaw.scripting.SecureEngineProvider;
+import hu.kleatech.jigsaw.scripting.*;
 import hu.kleatech.jigsaw.service.interfaces.*;
 import static hu.kleatech.jigsaw.utils.Constants.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +26,7 @@ public class MainApplication implements ApplicationRunner {
     @Autowired SpringTemplateEngine templateEngine;
     @EventListener(ApplicationStartedEvent.class)
     public void load() {
-        SecureEngineProvider.load();
+        EngineProvider.load();
         setModuleTemplateResolver();
     }
     

@@ -1,8 +1,8 @@
 package hu.kleatech.jigsaw.utils;
 
 import static hu.kleatech.jigsaw.utils.Constants.USER_DIR;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.nio.file.Path;
-import java.util.function.Supplier;
 
 public final class Utils {
     @FunctionalInterface
@@ -31,6 +31,10 @@ public final class Utils {
     public static <T> T TryOrNull(GenericExceptionFunction<T> func) {
         try {
             return func.action();
+        }
+        catch (UndeclaredThrowableException ex) {
+            System.out.println("Try catched " + ex.getUndeclaredThrowable().getMessage());
+            return null;
         }
         catch (Exception e) {
             System.out.println("Try catched " + e.getMessage());
