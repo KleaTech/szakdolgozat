@@ -1,13 +1,16 @@
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/ManifestHandlerService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/serialization/Manifest.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/EventService.java
+/home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/summarization/SummarizationService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/module-info.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/ManifestHandlerService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/serialization/Competitions.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/CompetitionService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/EventGroupService.java
+/home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/summarization/SummarizationServiceImpl.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/EventService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/TemplateLoaderService.java
+/home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/summarization/SummarizationResults.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/RoundService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/interfaces/CompetitionService.java
 /home/adam/szakdolgozat/hu.kleatech.jigsaw.service/src/main/java/hu/kleatech/jigsaw/service/serialization/Events.java

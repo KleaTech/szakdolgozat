@@ -16,4 +16,5 @@ module hu.kleatech.jigsaw.service {
     requires hu.kleatech.jigsaw.api;
     
     exports hu.kleatech.jigsaw.service.interfaces;
+    exports hu.kleatech.jigsaw.service.summarization;
 }

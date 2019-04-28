@@ -30,7 +30,7 @@
         <maven.version>3.3.9</maven.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jdk.version>1.9</jdk.version>
+        <jdk.version>1.10</jdk.version>
         <start-class>hu.kleatech.jigsaw.MainApplication</start-class>
     </properties>
 
@@ -80,8 +80,9 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
+                    <version>3.8.0</version>
                     <configuration>
+                        <release>10</release>
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
                     </configuration>

@@ -89,8 +89,4 @@ public class Round {
     public Double result(Function<List<Double>, Double> logic) {
         return TryOrNull(() -> logic.apply(values));
     }
-
-    public static List<Round> order(List<Round> rounds, Function<List<Round>, List<Round>> ordering) {
-        return TryOrNull(() -> ordering.apply(rounds));
-    }
 }
