@@ -31,7 +31,8 @@ public class Event implements Serializable {
     private String template;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "gen", sequenceName = "sequ", initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 
     protected Event(){} //For serialization and prototype creation only

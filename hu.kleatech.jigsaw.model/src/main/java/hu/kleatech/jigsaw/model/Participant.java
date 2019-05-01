@@ -34,7 +34,8 @@ public class Participant implements Serializable {
     private Team team;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "gen", sequenceName = "sequ", initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 
     protected Participant(){} //For serialization only

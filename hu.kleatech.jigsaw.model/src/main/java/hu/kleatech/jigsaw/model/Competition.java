@@ -34,7 +34,8 @@ public class Competition implements Serializable {
     private Properties infos;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "gen", sequenceName = "sequ", initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 
     protected Competition(){} //For serialization only

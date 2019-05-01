@@ -76,19 +76,5 @@ public class MainApplication implements ApplicationRunner {
             Files.move(source, source.resolveSibling("loaded_data.sql"));
         });
         //Test data can be added to the database here
-        var rand = new Random();
-        participantService.getAll().forEach(participant -> 
-            competitionService.getAll().forEach(competition -> {
-                if (competition.getEvent().getName().contains("ány") && participant.getSex() != Sex.FEMALE) return;
-                if (competition.getEvent().getName().contains("iú") && participant.getSex() != Sex.MALE) return;
-                var round = new Round(participant, competition, null);
-                var lower = rand.doubles(5, 10).findFirst().getAsDouble();
-                var upper = rand.doubles(lower, 15).findFirst().getAsDouble();
-                var stream = rand.doubles(lower, upper).map(d -> Math.round(d * 1000.0)/1000d);
-                if (competition.getName().contains("ávol")) stream.limit(6).forEach(round::add);
-                else stream.limit(3).forEach(round::add);
-                roundService.add(round);
-            })
-        );
     }
 }

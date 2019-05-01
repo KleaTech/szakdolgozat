@@ -24,7 +24,8 @@ public class EventGroup implements Serializable{
     private Properties infos;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "gen", sequenceName = "sequ", initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     private Long id;
 
     protected EventGroup(){} //For serialization and prototype creation only
