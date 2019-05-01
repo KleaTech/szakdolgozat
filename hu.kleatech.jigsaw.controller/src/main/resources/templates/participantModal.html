@@ -28,7 +28,12 @@
                                 </table>
                             </div>
                         </form>
-                        <button onclick='$("#participantModal").removeClass("fade"); $("#participantModal").modal("hide"); $.post("/addParticipant/" + teamSelectedId, $("#formParticipant").serialize(), function(html) {retrieveTeams()});' class="btn btn-primary">Save</button>
+                        <button onclick='$("#participantModal").removeClass("fade"); 
+                                $("#participantModal").modal("hide"); 
+                                $.post(
+                                    "/addParticipant/" + teamSelectedId, 
+                                    $("#formParticipant").serialize(), 
+                                    function(html) {retrieveTeams($("#eventGroupSelector").val())});' class="btn btn-primary">Save</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

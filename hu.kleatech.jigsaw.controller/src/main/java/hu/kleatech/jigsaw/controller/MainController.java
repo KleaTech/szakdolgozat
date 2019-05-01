@@ -14,7 +14,6 @@ import static hu.kleatech.jigsaw.utils.Utils.*;
 import java.util.*;
 import static hu.kleatech.jigsaw.controller.ControllerUtils.*;
 import java.io.IOException;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -83,11 +82,11 @@ public class MainController {
         Team old = (Team)model.asMap().get("teamSelected");
         Team nevv = teamService.get(old);
         model.addAttribute("teamSelected", nevv);
-        model.addAttribute("actualRounds", compSelected.getRounds().stream().filter(r -> r.getParticipant().getTeam().equals(nevv)).collect(Collectors.toList()));
+        model.addAttribute("roundsByParticipants", 
+                compSelected.getRounds().stream().filter(r -> r.getParticipant().getTeam().equals(nevv)).collect(Collectors.toMap(r -> r.getParticipant(), r -> r)));
         model.addAttribute("pojo", new StaticMap<String>());
         model.addAttribute("prefunc", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).preresults(scriptName(compSelected, ResultType.PRERESULT))));
         model.addAttribute("func", TryOrNull(() -> engineProvider.getEngine(scriptPath(compSelected)).result(scriptName(compSelected, ResultType.RESULT))));
-        //System.out.println("Func result: " + TryOrNull(IndexOutOfBoundsException.class, () -> ((Function<List<Double>, Double>)model.asMap().get("func")).apply(compSelected.getRounds().get(0).getValues())));
         return compSelected.getTemplate() + " :: fragment";
     }
     @GetMapping("/getTeamFragment/{teamId}")
@@ -107,9 +106,9 @@ public class MainController {
     }
     @PostMapping("/editRound/{id}")
     @ResponseBody
-    public String editRound(@ModelAttribute StaticMap<String> request, @PathVariable String id, Model model) {
-        Round old = roundService.get(Long.parseLong(id));
-        Round nevv = new Round(participantService.getAll().get(0), old.getCompetition(), null);
+    public String editRound(@ModelAttribute StaticMap<String> request, @PathVariable Long id, Model model) {
+        Round old = roundService.get(id);
+        Round nevv = new Round(old.getParticipant(), old.getCompetition(), null);
         request.stream().filter(e -> !e.trim().isEmpty()).mapToDouble(Double::parseDouble).forEachOrdered(nevv::add);
         roundService.replace(old, nevv);
         return "SUCCESS";

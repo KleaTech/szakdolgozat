@@ -4,16 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.kleatech.jigsaw.model.*;
 import hu.kleatech.jigsaw.service.serialization.*;
 import static hu.kleatech.jigsaw.utils.Constants.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -69,6 +63,10 @@ public class ManifestHandlerService extends hu.kleatech.jigsaw.service.interface
         if (fileSystemWatchRunning) return;
         WatchService watchService = FileSystems.getDefault().newWatchService();
         USER_DIR.resolve(MODULES_DIR_NAME).register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
+        for (var file : USER_DIR.resolve(MODULES_DIR_NAME).toFile().listFiles()){
+            if (file.getName().equals(LOADED_MODULES_DIR_NAME)) continue;
+            file.toPath().register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
+        }
         new Thread(() -> {
             fileSystemWatchRunning = true;
             WatchKey key;

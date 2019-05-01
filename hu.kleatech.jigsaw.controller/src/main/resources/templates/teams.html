@@ -8,37 +8,13 @@
     </head>
 
     <body>
-        <div th:fragment="fragment" class="revert" th:onload="${'var compSelectedId;'}">
-            <details style="display: hidden">
-                <summary>debug</summary>
-                <table>
-                    <tr th:each="var : ${#vars.getVariableNames()}">
-                        <td th:text="${var}"></td>
-                        <td th:text="${#vars.getVariable(var)}"></td>
-                    </tr>
-                    <!-- Adding these manually because they're considered special.
-                         see https://github.com/thymeleaf/thymeleaf/blob/thymeleaf-3.0.3.RELEASE/src/main/java/org/thymeleaf/context/WebEngineContext.java#L199
-                    -->
-                    <tr>
-                        <td>param</td>
-                        <td th:text="${#vars.getVariable('param')}"></td>
-                    </tr>
-                    <tr>
-                        <td>session</td>
-                        <td th:text="${#vars.getVariable('session')}"></td>
-                    </tr>
-                    <tr>
-                        <td>application</td>
-                        <td th:text="${#vars.getVariable('application')}"></td>
-                    </tr>
-                </table>
-            </details>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#teamModal">Add new team</button>
-            <div th:each="team : ${teams}" class="col card" style="margin: 20px; min-width: 500px">
+        <th:block th:fragment="fragment" class="revert">
+            <div th:each="team : ${teams}" class="col-auto card" style="margin: 20px; width: 0; min-width: 500px">
                 <div class="card-body">
                     <h1 class="card-title" th:inline="text">
                         [[${team.name}]]
-                        <img style="width: 2rem; height: 2rem; cursor: pointer" th:src="@{/img/trash.png}" th:onclick="${'$.get(&quot;/deleteTeam/' + team.id + '&quot;, function(html) {retrieveTeams()})'}"/>
+                        <img style="width: 2rem; height: 2rem; cursor: pointer" th:src="@{/img/trash.png}" 
+                             th:onclick="${'jQuery.' + js.func('get').argStr('/deleteTeam/' + team.id).argObj('function(html) {retrieveTeams(' + team.associatedEventGroup.id + ')}')}"/>
                     </h1>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" th:each="participant : ${team.participants}">
@@ -51,7 +27,8 @@
                                 <li class="list-inline-item" th:text="${participant.name}"></li>
                                 <li class="list-inline-item" th:text="'(' + ${utils.birthDateToAge(participant.birthDate)} + ')'"></li>
                                 <li class="list-inline-item">
-                                    <img style="width: 1rem; height: 1rem; cursor: pointer" th:src="@{/img/trash.png}" th:onclick="${'$.get(&quot;/deleteParticipant/' + participant.id + '&quot;, function(html) {retrieveTeams()})'}"/>
+                                    <img style="width: 1rem; height: 1rem; cursor: pointer" th:src="@{/img/trash.png}" 
+                                         th:onclick="${'jQuery.' + js.func('get').argStr('/deleteParticipant/' + participant.id).argObj('function(html) {retrieveTeams(' + team.associatedEventGroup.id + ')}')}"/>
                                 </li>
                             </ul>
                         </li>
@@ -59,6 +36,9 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#participantModal" th:onclick="${'teamSelectedId = ' + team.id + ';'}">Add new participant</button>
                 </div>
             </div>
-        </div>
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#teamModal">Add new team</button>
+            </div>
+        </th:block>
     </body>
 </html>

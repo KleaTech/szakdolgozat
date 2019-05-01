@@ -44,66 +44,68 @@
         <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
         <script>
             $.get("/registerListener", function(){
+                $('.toast').css('z-index', 100);
                 $('.toast').toast('show');
+            }).fail(function(){
+                location.reload(true);
             });
             
             function retrieveEventGroup(id) {
-            var url = '/getEventGroupFragment/' + id;
-            $("#eventGroupPlaceholder").load(url);
-            $("#eventPlaceholder").empty();
-            console.log("loaded");
+                var url = '/getEventGroupFragment/' + id;
+                $("#eventGroupPlaceholder").load(url);
+                $("#eventPlaceholder").empty();
+                $("#teamPlaceholder").empty();
+                $("#competitionPlaceholder").empty();
             }
             function retrieveEvent(id) {
-            var url = '/getEventFragment/' + id;
-            $("#eventPlaceholder").load(url);
-            $("#teamPlaceholder").empty();
-            console.log("loaded");
+                var url = '/getEventFragment/' + id;
+                $("#eventPlaceholder").load(url);
+                $("#teamPlaceholder").empty();
+                $("#competitionPlaceholder").empty();
             }
             function retrieveCompetition(compid) {
-            var url = '/getCompetitionFragment/' + compid;
-            $("#competitionPlaceholder").load(url);
-            console.log("loaded");
+                var url = '/getCompetitionFragment/' + compid;
+                $("#competitionPlaceholder").load(url);
             }
             function retrieveTeam(id) {
-            var url = '/getTeamFragment/' + id;
-            $("#teamPlaceholder").load(url);
-            $("#competitionPlaceholder").empty();
-            console.log("loaded");
+                var url = '/getTeamFragment/' + id;
+                $("#teamPlaceholder").load(url);
+                $("#competitionPlaceholder").empty();
             }
             function retrieveHome(caller) {
-            $("#contentPlaceholder").load('/getHomeFragment');
-            $(caller).parent().attr("class", "nav-item");
-            $("#home").attr("class", "nav-item active");
+                $("#contentPlaceholder").load('/getHomeFragment');
+                $(caller).parent().attr("class", "nav-item");
+                $("#home").attr("class", "nav-item active");
             }
             function retrieveTeams(id) {
-            var url = '/getTeamsFragment/' + id;
-            $("#teamsPlaceholder").load(url);
+                var url = '/getTeamsFragment/' + id;
+                $("#teamsPlaceholder").load(url);
             }
             function retrieveEventGroupForTeams(caller) {
-            var url = '/getEventGroup';
-            $("#contentPlaceholder").load(url);
-            //$(caller).parent().attr("class", "nav-item");
-            //$("#teams").attr("class", "nav-item active");
+                var url = '/getEventGroup';
+                $("#contentPlaceholder").load(url);
+                $(caller).parent().attr("class", "nav-item");
+                $("#teams").attr("class", "nav-item active");
             }
             function showError(message){
-            alert(message);
+                alert(message);
             }
             function send(compId, partId, json, placeholderId) {
-            $.ajax({
-            url: "/addRound/" + compId + "/" + partId,
-            type: 'POST',
-            data: JSON.stringify(json),
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            dataType: "json",
-            success: function(data, textStatus, xhr){
-            $("#" + placeholderId).innerHTML = data;
-            },
-            error: function(data, textStatus, xhr){
-            showError(data.responseText);
-            }
+                $.ajax({
+                    url: "/addRound/" + compId + "/" + partId,
+                    type: 'POST',
+                    data: JSON.stringify(json),
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                dataType: "json",
+                success: function(data, textStatus, xhr){
+                    $("#" + placeholderId).innerHTML = data;
+                },
+                error: function(data, textStatus, xhr){
+                    showError(data.responseText);
+                }
             });
             }
         </script>

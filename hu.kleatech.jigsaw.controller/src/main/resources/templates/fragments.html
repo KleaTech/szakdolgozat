@@ -22,7 +22,7 @@
                 </ul>
             </div>
             
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="position: absolute; top: 5vmin; right: 5vmin; z-index: 100">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="position: absolute; top: 5vmin; right: 5vmin; z-index: -1">
                 <div class="toast-header">
                   <strong class="mr-auto">Available modules have changed</strong>
                 </div>
@@ -32,7 +32,7 @@
             </div>
         </nav>
 
-        <div class="container" th:with="eventGroups=${eventGroups}" th:fragment="home" onload="$(caller).parent().attr("class", "nav-item")">
+        <div class="container" th:with="eventGroups=${eventGroups}" th:fragment="home" onload="$(caller).parent().attr('class', 'nav-item')">
              <div class="row">
                 <div class="col-12 col-lg-6">
                     <h2>Event Group</h2>
@@ -54,10 +54,10 @@
             </div>
             <hr/>
             <div class="row">
-                <div id="teamPlaceholder" class="col-12 col-lg-6"></div>
+                <div id="teamPlaceholder" class="col"></div>
             </div>
             <div class="row">
-                <div id="competitionPlaceholder" class="col-12"></div>
+                <div id="competitionPlaceholder" class="col"></div>
             </div>
         </div>
     </body>

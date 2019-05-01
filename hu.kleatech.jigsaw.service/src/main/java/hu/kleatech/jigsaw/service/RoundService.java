@@ -48,6 +48,6 @@ public class RoundService implements hu.kleatech.jigsaw.service.interfaces.Round
     public Round replace(Round old, Round nevv) {
         old.overwrite(nevv);
         roundRepository.flush();
-        return roundRepository.save(old);
+        return roundRepository.saveAndFlush(old);
     }
 }
