@@ -37,8 +37,20 @@
       "template": "eventFragment",
       "competitions": [
         {
-          "name": "competition",
-          "template": "competitionFragment"
+          "name": "Talaj",
+          "template": "competitionFragmentOther"
+        },
+        {
+          "name": "Távolugrás",
+          "template": "competitionFragmentJump"
+        },
+        {
+          "name": "Gerenda",
+          "template": "competitionFragmentOther"
+        },
+        {
+          "name": "Felemás",
+          "template": "competitionFragmentOther"
         }
       ]
     }
