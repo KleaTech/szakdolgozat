@@ -31,7 +31,7 @@ public class MainApplication implements ApplicationRunner {
     @Autowired SpringTemplateEngine templateEngine;
     @EventListener(ApplicationStartedEvent.class)
     public void load() {
-        EngineProvider.load();
+        SecureEngineProvider.load();
         setModuleTemplateResolver();
     }
     
